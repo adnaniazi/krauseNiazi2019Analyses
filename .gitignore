@@ -9,7 +9,7 @@ inst/doc/*.html
 *.log
 .Rproj.user
 *.Rproj
-
+inst/extdata/*.csv
 Meta
 doc
 docs

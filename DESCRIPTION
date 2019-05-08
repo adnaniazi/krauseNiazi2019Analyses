@@ -15,12 +15,16 @@ License: MIT + file LICENSE
 Depends:
     R (>= 3.0.0)
 Imports:
+    tidyverse,
+    dplyr,
+    ggplot2,
+    piggyback
 Suggests:
     covr,
     knitr,
     testthat,
-    spelling
-RoxygenNote: 6.0.0
+    spelling,
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Language: en-US
