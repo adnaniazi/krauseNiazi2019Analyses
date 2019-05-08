@@ -18,7 +18,8 @@ Imports:
     tidyverse,
     dplyr,
     ggplot2,
-    piggyback
+    piggyback,
+    drake
 Suggests:
     covr,
     knitr,
