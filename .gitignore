@@ -3,7 +3,6 @@
 *.pyc
 *.Rcheck/
 *.orig
-krauseNiazi2019Analyses*.tar.gz
 .DS_Store
 Rd2.pdf
 assets/
