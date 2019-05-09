@@ -23,7 +23,9 @@ Imports:
     piggyback,
     drake,
     graph,
-    BiocManager
+    BiocManager,
+    visNetwork,
+    here
 Suggests:
     knitr,
     testthat,

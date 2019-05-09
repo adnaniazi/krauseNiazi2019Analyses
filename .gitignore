@@ -1,4 +1,5 @@
 .drake/*
+/extdata/*.csv
 *.pyc
 *.Rcheck/
 *.orig
