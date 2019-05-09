@@ -25,7 +25,8 @@ Imports:
     graph,
     BiocManager,
     visNetwork,
-    here
+    here,
+    Jmisc
 Suggests:
     knitr,
     testthat,

@@ -33,6 +33,11 @@ Source: CRAN
 Version: 1.0.0
 Hash: 6abedd7919c4457604c0aa44529a6683
 
+Package: Jmisc
+Source: CRAN
+Version: 0.3.1
+Hash: c5956f5d429964d5d50f309ed2c64045
+
 Package: R6
 Source: CRAN
 Version: 2.4.0
@@ -383,6 +388,7 @@ Requires: Rcpp
 Package: praise
 Source: CRAN
 Version: 1.0.0
+Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
 
 Package: prettyunits
 Source: CRAN
@@ -508,7 +514,8 @@ Hash: aaa3f56d4255306a32ea30df8ef63901
 Package: testthat
 Source: CRAN
 Version: 2.1.1
-Requires: R6, cli, crayon, digest, magrittr, rlang, withr, praise
+Hash: 00a20d71ed0d31e2d284e4d2d3b3d7e3
+Requires: R6, cli, crayon, digest, magrittr, praise, rlang, withr
 
 Package: tibble
 Source: CRAN

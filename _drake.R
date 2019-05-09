@@ -1,4 +1,5 @@
-drake::expose_imports('krauseNiazi2019Analyses')
+#drake::expose_imports('krauseNiazi2019Analyses')
+Jmisc::sourceAll('R/')
 data_download_plan = drake::code_to_plan("analyses/download_data.R")
 plan = drake::bind_plans(data_download_plan)
 drake::drake_config(plan)
