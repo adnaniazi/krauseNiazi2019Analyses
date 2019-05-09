@@ -26,6 +26,6 @@ Date/Publication: 2018-10-11 13:00:03 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 22:27:29 UTC;
     unix
 Archs: tidyselect.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: ce32c88efe672d565819caa17238b04c

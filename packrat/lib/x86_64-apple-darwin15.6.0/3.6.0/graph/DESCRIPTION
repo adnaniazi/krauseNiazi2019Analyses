@@ -29,6 +29,6 @@ Date/Publication: 2019-05-02
 NeedsCompilation: yes
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-05-03 14:42:25 UTC;
     unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: Bioconductor
 Hash: b258b448d089a72fe58df70634561453

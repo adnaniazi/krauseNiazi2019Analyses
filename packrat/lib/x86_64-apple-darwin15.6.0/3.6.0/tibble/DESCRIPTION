@@ -40,6 +40,6 @@ Date/Publication: 2019-03-16 22:50:03 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-27 02:01:46 UTC;
     unix
 Archs: tibble.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: e9d844f966bd4d40556b50c3b2239646

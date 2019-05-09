@@ -63,6 +63,6 @@ Date/Publication: 2019-03-18 14:43:29 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:50:52 UTC;
     unix
 Archs: colorspace.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 60a56e9998b8b58ee378db3dc91b27a5

@@ -25,6 +25,6 @@ Maintainer: Rich FitzJohn <rich.fitzjohn@gmail.com>
 Repository: CRAN
 Date/Publication: 2018-10-18 11:10:03 UTC
 Built: R 3.6.0; ; 2019-04-26 20:45:58 UTC; unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 76ffa40827f4102989daa97896baf696

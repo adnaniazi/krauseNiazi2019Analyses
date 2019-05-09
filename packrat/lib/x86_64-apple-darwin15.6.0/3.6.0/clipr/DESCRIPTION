@@ -33,6 +33,6 @@ Maintainer: Matthew Lincoln <matthew.d.lincoln@gmail.com>
 Repository: CRAN
 Date/Publication: 2019-04-15 15:22:49 UTC
 Built: R 3.6.0; ; 2019-04-26 19:50:07 UTC; unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: b696ba40d4f4e96f56e82040ed09dd19

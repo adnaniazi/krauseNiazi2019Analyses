@@ -38,6 +38,6 @@ Date/Publication: 2019-03-19 23:10:03 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:51:54 UTC;
     unix
 Archs: git2r.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 95c91baea310d669c023627b454b5887

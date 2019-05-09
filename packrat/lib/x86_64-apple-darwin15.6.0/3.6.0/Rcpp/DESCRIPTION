@@ -36,6 +36,6 @@ Date/Publication: 2019-03-17 07:15:10 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:50:02 UTC;
     unix
 Archs: Rcpp.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 390ed5b5da840cec3e6f5c90c6ab23f7

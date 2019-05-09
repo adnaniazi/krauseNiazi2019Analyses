@@ -44,6 +44,6 @@ Date/Publication: 2018-12-07 00:50:11 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:50:35 UTC;
     unix
 Archs: markdown.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 730f688930cef3223d59bd8aef679ab9

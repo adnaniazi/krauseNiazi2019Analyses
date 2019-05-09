@@ -41,6 +41,6 @@ Maintainer: Carl Boettiger <cboettig@gmail.com>
 Repository: CRAN
 Date/Publication: 2019-02-07 05:50:10 UTC
 Built: R 3.6.0; ; 2019-04-27 03:52:46 UTC; unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 7b1a025be4f2d02a570f42a0f81e1e84

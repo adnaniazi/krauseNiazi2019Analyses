@@ -23,6 +23,6 @@ Maintainer: Marcel Ramos <marcel.ramos@roswellpark.org>
 Repository: CRAN
 Date/Publication: 2018-11-13 08:40:10 UTC
 Built: R 3.6.0; ; 2019-04-26 20:04:02 UTC; unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 355639afbcb951bf238be84a81bb5b20

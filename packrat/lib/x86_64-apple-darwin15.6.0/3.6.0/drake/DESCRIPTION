@@ -59,6 +59,6 @@ Date/Publication: 2019-04-19 11:40:04 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-27 00:54:30 UTC;
     unix
 Archs: drake.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 63bc67f508f01bdcc0be5e9b7926ee45

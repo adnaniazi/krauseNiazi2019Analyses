@@ -32,6 +32,6 @@ Date/Publication: 2019-01-13 12:50:03 UTC
 Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 22:26:39 UTC;
     unix
 Archs: askpass.so.dSYM
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 6f6c430e3cd0dd7d48f447700f4d7e7f

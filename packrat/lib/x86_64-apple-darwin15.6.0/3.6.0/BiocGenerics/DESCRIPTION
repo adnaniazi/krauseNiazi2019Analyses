@@ -33,6 +33,6 @@ Date/Publication: 2019-05-02
 NeedsCompilation: no
 Packaged: 2019-05-03 00:59:31 UTC; biocbuild
 Built: R 3.6.0; ; 2019-05-03 14:09:22 UTC; unix
-InstallAgent: packrat 0.5.0.8
+InstallAgent: packrat 0.5.0
 InstallSource: Bioconductor
 Hash: fc75f526647a48f4c23fa4c150423aa4
