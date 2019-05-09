@@ -20,7 +20,7 @@ GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: master
 GithubSHA1: 505f12aa4ef884cc7021719f4f0e4b69a0b93354
-Built: R 3.6.0; ; 2019-05-09 09:57:05 UTC; unix
+Built: R 3.6.0; ; 2019-05-09 10:18:52 UTC; unix
 InstallAgent: packrat 0.5.0.8
 InstallSource: github
 Hash: 8c3327c57198b15d456bbf0743b8c2c1
