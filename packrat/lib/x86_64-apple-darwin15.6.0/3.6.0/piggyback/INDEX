@@ -1,0 +1,9 @@
+pb_delete               Delete an asset attached to a release
+pb_download             Download data from an existing release
+pb_download_url         Get the download url of a given file
+pb_list                 List all assets attached to a release
+pb_new_release          Create a new release on GitHub repo
+pb_track                Track data files of a given pattern or location
+pb_upload               Upload data to an existing release
+piggyback-package       piggyback: Managing Larger Data on a GitHub
+                        Repository

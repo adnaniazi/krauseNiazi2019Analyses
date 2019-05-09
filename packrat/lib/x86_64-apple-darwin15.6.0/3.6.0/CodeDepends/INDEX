@@ -1,0 +1,44 @@
+Script-class            The Script class and elements
+asVarName               asVarName
+findWhenUnneeded        Determine the code block after which a variable
+                        can be explicitly removed
+getDependsThread        Compute which code blocks in a script are
+                        inputs to define a variable
+getDetailedTimelines    Compute and plot life cycle of variables in
+                        code
+getExpressionThread     Find the sequence of expressions needed to get
+                        to a certain point in the code
+getInputs               Get input and output variables and literals
+                        from R expressions
+getPropagateChanges     Determine which expressions to update when a
+                        variable changes
+getVariableDepends      Determine dependencies for code blocks
+getVariables            Get the names of the variables used in code
+guessTaskType           Guess the type of high-level task of a code
+                        block
+highlightCode           Display R code with highlighting of variables,
+                        links to functions and packages
+historyAsScript         Convert R interactive history to a Script
+                        object
+inputCollector          Create customized input/output collector for
+                        use in getInputs
+libreqhandler           Specifying custom processing behavior, Function
+                        handlers and handler factories
+makeCallGraph           Create a graph representing which functions
+                        call other functions
+makeTaskGraph           Create a graph connecting the tasks within a
+                        script
+makeVariableGraph       Create a graph describing the relationships
+                        between variables in a script
+readScript              Read the code blocks/chunks from a document
+runUpToSection          Evaluate the code blocks up to a particular
+                        section of a document
+separateExpressionBlocks
+                        Convert a script into individual top-level
+                        calls
+sourceVariable          Evaluate code in document in order to define
+                        the specified variables
+splitRedefinitions      Divide a script into separate lists of code
+                        based on redefinition of a variable
+updatingScript          Create a Script object that re-reads the
+                        original file as needed

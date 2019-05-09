@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: A Pipeline Toolkit for Reproducible Computation at Scale</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+<h1> A Pipeline Toolkit for Reproducible Computation at Scale
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;drake&rsquo; version 7.2.0</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="drake-package.html">drake-package</a></td>
+<td>drake: A pipeline toolkit for reproducible computation at scale.</td></tr>
+<tr><td style="width: 25%;"><a href="bind_plans.html">bind_plans</a></td>
+<td>Row-bind together drake plans</td></tr>
+<tr><td style="width: 25%;"><a href="build_times.html">build_times</a></td>
+<td>List the time it took to build each target.</td></tr>
+<tr><td style="width: 25%;"><a href="cached.html">cached</a></td>
+<td>List targets in the cache.</td></tr>
+<tr><td style="width: 25%;"><a href="clean.html">clean</a></td>
+<td>Remove targets/imports from the cache.</td></tr>
+<tr><td style="width: 25%;"><a href="clean_mtcars_example.html">clean_mtcars_example</a></td>
+<td>Clean the mtcars example from 'drake_example("mtcars")'</td></tr>
+<tr><td style="width: 25%;"><a href="code_to_plan.html">code_to_plan</a></td>
+<td>Turn an R script file or knitr / R Markdown report into a 'drake' workflow plan data frame.</td></tr>
+<tr><td style="width: 25%;"><a href="deps_code.html">deps_code</a></td>
+<td>List the dependencies of a function or command</td></tr>
+<tr><td style="width: 25%;"><a href="deps_knitr.html">deps_knitr</a></td>
+<td>Find the drake dependencies of a dynamic knitr report target.</td></tr>
+<tr><td style="width: 25%;"><a href="deps_profile.html">deps_profile</a></td>
+<td>Find out why a target is out of date.</td></tr>
+<tr><td style="width: 25%;"><a href="deps_target.html">deps_target</a></td>
+<td>List the dependencies of a target</td></tr>
+<tr><td style="width: 25%;"><a href="diagnose.html">diagnose</a></td>
+<td>Get diagnostic metadata on a target.</td></tr>
+<tr><td style="width: 25%;"><a href="drake-package.html">drake</a></td>
+<td>drake: A pipeline toolkit for reproducible computation at scale.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_build.html">drake_build</a></td>
+<td>Build/process a single target or import.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_cache_log.html">drake_cache_log</a></td>
+<td>Get a table that represents the state of the cache.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_config.html">drake_config</a></td>
+<td>Create the internal runtime parameter list used internally in 'make()'.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_debug.html">drake_debug</a></td>
+<td>Run a single target's command in debug mode.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_envir.html">drake_envir</a></td>
+<td>Get the environment where drake builds targets</td></tr>
+<tr><td style="width: 25%;"><a href="drake_example.html">drake_example</a></td>
+<td>Download and save the code and data files of an example 'drake'-powered project.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_examples.html">drake_examples</a></td>
+<td>List the names of all the drake examples.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_gc.html">drake_gc</a></td>
+<td>Do garbage collection on the drake cache.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_get_session_info.html">drake_get_session_info</a></td>
+<td>Return the 'sessionInfo()' of the last call to 'make()'.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_ggraph.html">drake_ggraph</a></td>
+<td>Show a 'ggraph'/'ggplot2' representation of your drake project.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_graph_info.html">drake_graph_info</a></td>
+<td>Create the underlying node and edge data frames behind 'vis_drake_graph()'.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_hpc_template_file.html">drake_hpc_template_file</a></td>
+<td>Write a template file for deploying work to a cluster / job scheduler.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_hpc_template_files.html">drake_hpc_template_files</a></td>
+<td>List the available example template files for deploying work to a cluster / job scheduler.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_plan.html">drake_plan</a></td>
+<td>Create a workflow plan data frame for the 'plan' argument of 'make()'.</td></tr>
+<tr><td style="width: 25%;"><a href="drake_plan_source.html">drake_plan_source</a></td>
+<td>Show the code required to produce a given workflow plan data frame</td></tr>
+<tr><td style="width: 25%;"><a href="evaluate_plan.html">evaluate_plan</a></td>
+<td>Use wildcard templating to create a workflow plan data frame from a template data frame.</td></tr>
+<tr><td style="width: 25%;"><a href="expand_plan.html">expand_plan</a></td>
+<td>Create replicates of targets.</td></tr>
+<tr><td style="width: 25%;"><a href="expose_imports.html">expose_imports</a></td>
+<td>Expose all the imports in a package so 'make()' can detect all the package's nested functions.</td></tr>
+<tr><td style="width: 25%;"><a href="failed.html">failed</a></td>
+<td>List failed targets. to 'make()'.</td></tr>
+<tr><td style="width: 25%;"><a href="file_in.html">file_in</a></td>
+<td>Declare input files and directories.</td></tr>
+<tr><td style="width: 25%;"><a href="file_out.html">file_out</a></td>
+<td>Declare output files and directories.</td></tr>
+<tr><td style="width: 25%;"><a href="file_store.html">file_store</a></td>
+<td>Tell 'drake' that you want information on a _file_ (target or import), not an ordinary object.</td></tr>
+<tr><td style="width: 25%;"><a href="find_cache.html">find_cache</a></td>
+<td>Search up the file system for the nearest drake cache.</td></tr>
+<tr><td style="width: 25%;"><a href="gather_by.html">gather_by</a></td>
+<td>Gather multiple groupings of targets</td></tr>
+<tr><td style="width: 25%;"><a href="gather_plan.html">gather_plan</a></td>
+<td>Write commands to combine several targets into one or more overarching targets.</td></tr>
+<tr><td style="width: 25%;"><a href="get_cache.html">get_cache</a></td>
+<td>Get the default cache of a 'drake' project.</td></tr>
+<tr><td style="width: 25%;"><a href="ignore.html">ignore</a></td>
+<td>Ignore components of commands and imported functions.</td></tr>
+<tr><td style="width: 25%;"><a href="knitr_in.html">knitr_in</a></td>
+<td>Declare 'knitr'/'rmarkdown' source files as dependencies.</td></tr>
+<tr><td style="width: 25%;"><a href="legend_nodes.html">legend_nodes</a></td>
+<td>Create the nodes data frame used in the legend of the graph visualizations.</td></tr>
+<tr><td style="width: 25%;"><a href="readd.html">loadd</a></td>
+<td>Read and return a drake target/import from the cache.</td></tr>
+<tr><td style="width: 25%;"><a href="load_mtcars_example.html">load_mtcars_example</a></td>
+<td>Load the mtcars example.</td></tr>
+<tr><td style="width: 25%;"><a href="make.html">make</a></td>
+<td>Run your project (build the outdated targets).</td></tr>
+<tr><td style="width: 25%;"><a href="map_plan.html">map_plan</a></td>
+<td>Create a plan that maps a function to a grid of arguments.</td></tr>
+<tr><td style="width: 25%;"><a href="missed.html">missed</a></td>
+<td>Report any import objects required by your drake_plan plan but missing from your workspace or file system.</td></tr>
+<tr><td style="width: 25%;"><a href="new_cache.html">new_cache</a></td>
+<td>Make a new 'drake' cache.</td></tr>
+<tr><td style="width: 25%;"><a href="outdated.html">outdated</a></td>
+<td>List the targets that are out of date.</td></tr>
+<tr><td style="width: 25%;"><a href="plan_to_code.html">plan_to_code</a></td>
+<td>Turn a 'drake' workflow plan data frame into a plain R script file.</td></tr>
+<tr><td style="width: 25%;"><a href="plan_to_notebook.html">plan_to_notebook</a></td>
+<td>Turn a 'drake' workflow plan data frame into an R notebook,</td></tr>
+<tr><td style="width: 25%;"><a href="predict_runtime.html">predict_runtime</a></td>
+<td>Predict the elapsed runtime of the next call to 'make()' for non-staged parallel backends.</td></tr>
+<tr><td style="width: 25%;"><a href="predict_workers.html">predict_workers</a></td>
+<td>Predict the load balancing of the next call to 'make()' for non-staged parallel backends.</td></tr>
+<tr><td style="width: 25%;"><a href="progress.html">progress</a></td>
+<td>Get the build progress of your targets during a 'make()'.</td></tr>
+<tr><td style="width: 25%;"><a href="readd.html">readd</a></td>
+<td>Read and return a drake target/import from the cache.</td></tr>
+<tr><td style="width: 25%;"><a href="read_drake_seed.html">read_drake_seed</a></td>
+<td>Read the pseudo-random number generator seed of the project.</td></tr>
+<tr><td style="width: 25%;"><a href="reduce_by.html">reduce_by</a></td>
+<td>Reduce multiple groupings of targets</td></tr>
+<tr><td style="width: 25%;"><a href="reduce_plan.html">reduce_plan</a></td>
+<td>Write commands to reduce several targets down to one.</td></tr>
+<tr><td style="width: 25%;"><a href="render_drake_ggraph.html">render_drake_ggraph</a></td>
+<td>Render a static 'ggplot2'/'ggraph' visualization from 'drake_graph_info()' output.</td></tr>
+<tr><td style="width: 25%;"><a href="render_drake_graph.html">render_drake_graph</a></td>
+<td>Render a visualization using the data frames generated by 'drake_graph_info()'.</td></tr>
+<tr><td style="width: 25%;"><a href="render_sankey_drake_graph.html">render_sankey_drake_graph</a></td>
+<td>Render a Sankey diagram from'drake_graph_info()'.</td></tr>
+<tr><td style="width: 25%;"><a href="rescue_cache.html">rescue_cache</a></td>
+<td>Try to repair a drake cache that is prone to throwing 'storr'-related errors.</td></tr>
+<tr><td style="width: 25%;"><a href="running.html">running</a></td>
+<td>List running targets.</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_drake_build</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_drake_ggraph</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_drake_graph_info</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_make</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_missed</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_outdated</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_predict_runtime</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_predict_workers</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_sankey_drake_graph</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="r_make.html">r_vis_drake_graph</a></td>
+<td>Experimental: reproducible R session management for drake functions</td></tr>
+<tr><td style="width: 25%;"><a href="sankey_drake_graph.html">sankey_drake_graph</a></td>
+<td>Show a Sankey graph of your drake project.</td></tr>
+<tr><td style="width: 25%;"><a href="show_source.html">show_source</a></td>
+<td>Show how a target/import was produced.</td></tr>
+<tr><td style="width: 25%;"><a href="tracked.html">tracked</a></td>
+<td>List the targets and imports that are reproducibly tracked.</td></tr>
+<tr><td style="width: 25%;"><a href="trigger.html">trigger</a></td>
+<td>Customize the decision rules for rebuilding targets</td></tr>
+<tr><td style="width: 25%;"><a href="use_drake.html">use_drake</a></td>
+<td>Use drake in a project</td></tr>
+<tr><td style="width: 25%;"><a href="vis_drake_graph.html">vis_drake_graph</a></td>
+<td>Show an interactive visual network representation of your drake project.</td></tr>
+</table>
+</body></html>
