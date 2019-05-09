@@ -1,5 +1,11 @@
-#drake::expose_imports('krauseNiazi2019Analyses')
+# Import all function from the packages
 Jmisc::sourceAll('R/')
+
+# make individual plans
 data_download_plan = drake::code_to_plan("analyses/download_data.R")
-plan = drake::bind_plans(data_download_plan)
+data_consolidation_plan = drake::code_to_plan("analyses/consolidate_data.R")
+
+# consolidate all plans into one
+plan = drake::bind_plans(data_download_plan,
+                         data_consolidation_plan)
 drake::drake_config(plan)

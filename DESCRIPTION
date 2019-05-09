@@ -16,10 +16,12 @@ Depends:
     R (>= 3.0.0)
 biocViews:
 Imports:
+    magrittr,
     CodeDepends,
     tidyverse,
     dplyr,
     ggplot2,
+    ggpubr,
     piggyback,
     drake,
     graph,

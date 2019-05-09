@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_data.R
 \name{get_data}
 \alias{get_data}
-\title{Download data from GitHub release using piggyback.}
+\title{Download data from GitHub release using piggyback and return it as
+a dataframe.}
 \usage{
 get_data(release_version, file_name)
 }
@@ -10,5 +11,6 @@ get_data(release_version, file_name)
 \item{release_version}{Which version of the data to download}
 }
 \description{
-Download data from GitHub release using piggyback.
+Download data from GitHub release using piggyback and return it as
+a dataframe.
 }
