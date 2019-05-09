@@ -21,12 +21,12 @@ Imports:
     dplyr,
     ggplot2,
     piggyback,
-    drake
+    drake,
+    graph,
+    BiocManager
 Suggests:
-    covr,
     knitr,
     testthat,
-    spelling,
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
