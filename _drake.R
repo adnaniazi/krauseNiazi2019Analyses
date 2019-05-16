@@ -1,5 +1,6 @@
 # Import all function from the packages
 Jmisc::sourceAll('R/')
+source("analyses/load_packages_for_drake.R")
 
 # make individual plans
 data_download_plan = drake::code_to_plan("analyses/download_data.R")

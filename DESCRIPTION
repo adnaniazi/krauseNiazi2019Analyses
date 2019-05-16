@@ -28,7 +28,8 @@ Imports:
     BiocManager,
     visNetwork,
     here,
-    Jmisc
+    Jmisc,
+    pacman
 Suggests:
     knitr,
     testthat,

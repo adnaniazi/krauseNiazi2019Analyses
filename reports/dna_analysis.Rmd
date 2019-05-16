@@ -1,0 +1,131 @@
+---
+title: "DNA analysis"
+author: "Adnan M. Niazi"
+date: "5/13/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Krause Niazi et al. DNA Data Analysis
+
+We first load the libraries
+```{r load_libraries}
+pacman::p_load(dplyr, magrittr, ggplot2, drake, knitr, ggpubr)
+```
+
+We now load the data.
+```{r load-libraries}
+loadd(dna_kr_data)
+```
+Here is a description of columns of `dna_kr_data`:
+```{r data-description-1, echo=FALSE}
+col_names_df <- data.frame(Columns = c("read_id", "tail_start_ff", "tail_end_ff", "samples_per_nt_ff", "tail_length_ff", "tail_start_st", "tail_end_st", "samples_per_nt_st", "tail_length_st", "read_type", "barcode", "replicate", "file_path", "transcript_alignment_start_st", "transcript_alignment_start_ff"), Description = c("Read ID", "tailfindr's estimate of poly(A) start site based on fliflop basecalled data", "tailfindr's estimate of poly(A) end site based on fliflop basecalled data", "tailfindr's estimate of read-specific translocation rate in units of samples per nucleotide based on flipflop basecalled data", "tailfindr's estimate of poly(A) tail length based on fliflop basecalled data", "tailfindr's estimate of poly(A) start site from data basecalled using standard model", "tailfindr's estimate of poly(A) end site from data basecalled using standard model", "tailfindr's estimate of read-specific translocation rate in units of samples per nucleotide from data basecalled using standard model", "tailfindr's estimate of poly(A) tail length from data basecalled using standard model", "Whether the read is poly(A) or poly(T) read", "True length of the spikeins", "Replicate", "Full file path (relevant only for use within Valen lab)", "Location of tail end as detected by finding the GFP sequencing adjacent to it (based on data basecalled using standard model)", "Location of tail end as detected by finding the GFP sequencing adjacent to it (based on data basecalled using flipflop model"))                                                                                                                                   
+```
+```{r data-description-2}
+knitr::kable(col_names_df)
+```
+
+### tailfindr's tail end estimate vs. tail end estimate obtained by alignment of eGFP
+Here, we estimate if the coordinates of the tail end estimated by tailfindr match up with those obtained from the alignment with eGFP sequence.
+```{r, warning=FALSE}
+p <- ggplot(dna_kr_data, aes(x = tail_end_ff, y = transcript_alignment_start_ff)) +
+    geom_point(shape = 21, colour = 'black', fill = 'black', size = 2, stroke=0, alpha = 0.1) +
+    geom_abline(intercept = 0, slope = 1, color="red", linetype = 'dotted', size = 0.7) +
+    geom_smooth(method = 'lm',formula = y~x, color="#797979", fullrange = TRUE, se = FALSE, size = 0.5) +
+    stat_cor(method = "pearson", label.x = 5000, label.y = 30000) +
+    coord_cartesian(xlim = c(0, 40000), ylim = c(0, 40000))
+```
+```{r, warning=FALSE, echo=FALSE}
+p <- p + theme_bw() +
+  theme(
+    axis.line =element_line(colour = "black"),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank()
+  ) +
+  xlab('Tail end location estimated by tailfindr') +
+  ylab('Tail end location estimated using alignment with eGFP')+
+  facet_grid(read_type~.)
+p
+```
+Now we present the same information as histogram.
+```{r, warning=FALSE}
+data <- mutate(dna_kr_data, diff = tail_end_ff - transcript_alignment_start_ff)
+p <- ggplot(data, aes(x = diff)) +
+  geom_density() + 
+  xlab('tail end location estimated by tailfindr - tail end location estimate by eGFP alignment') +
+  theme_bw() +
+  facet_grid(read_type~., scales="free")
+p
+```
+
+Now we present the same information as histogram.
+```{r, warning=FALSE}
+data <- mutate(dna_kr_data, diff = tail_end_st - transcript_alignment_start_st)
+p <- ggplot(data, aes(x = diff)) +
+  geom_density() + 
+  xlab('tail end location estimated by tailfindr - tail end location estimate by eGFP alignment') +
+  theme_bw() 
+p
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data, aes(x = tail_end_st,  y = transcript_alignment_start_st)) +
+  geom_point(alpha = 0.1) + 
+  facet_wrap(.~read_type) + coord_cartesian(xlim = c(0,5000), ylim = c(0,5000))
+```
+
+
+
+
+
+
+
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data, aes(y = tail_length_ff,  x = as.factor(barcode), color = as.factor(barcode))) +
+  geom_violin() + 
+  facet_grid(.~replicate)
+```
+
+
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data, aes(y = tail_length_st,  x = as.factor(barcode), color = as.factor(barcode))) +
+  geom_violin() + 
+  facet_grid(.~replicate)
+```
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data, aes(x = tail_end_st,  y = transcript_alignment_start_st)) +
+  geom_point(alpha = 0.01) +
+  facet_wrap(.~read_type) + coord_cartesian(xlim = c(0,5000), ylim = c(0,5000))
+```
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data, aes(x = tail_end_ff,  y = transcript_alignment_start_ff)) +
+  geom_point(alpha = 0.1) + 
+  facet_wrap(.~read_type) + coord_cartesian(xlim = c(0,5000), ylim = c(0,5000))
+```
+Get the troublesome
+```{r, warning=FALSE}
+df <- dna_kr_data %>% dplyr::filter(transcript_alignment_start_ff > 500 & transcript_alignment_start_ff < 1200) %>% 
+  dplyr::filter(tail_end_ff > 1300 & tail_end_ff < 2500) 
+save(df, file = file.path(here::here(), 'df.Rda'))
+
+```
+
+```{r, warning=FALSE}
+ggplot(data = dna_kr_data , aes(x = tail_length_ff)) +
+  geom_density(aes(color = as.factor(barcode))) +
+  facet_grid(read_type~.)
+```

@@ -2,6 +2,7 @@
 #' a dataframe.
 #'
 #' @param release_version Which version of the data to download
+#' @param file_name 
 #'
 #' @export
 #'
@@ -17,7 +18,6 @@ get_data <- function(release_version, file_name) {
     dest_dir, 
     file_name
     )
-  print(file_path)
   df <- read.csv(file_path, header = TRUE, stringsAsFactors = FALSE)
   return(df)
 }
