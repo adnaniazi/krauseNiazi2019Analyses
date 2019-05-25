@@ -16,7 +16,7 @@ geom_one_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "yden
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomFlatViolin,
+    geom = GeomFlatViolinOneSided,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
@@ -32,7 +32,7 @@ geom_one_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "yden
 #' @format NULL
 #' @usage NULL
 #' @export
-GeomFlatViolin <-
+GeomFlatViolinOneSided <-
   ggproto("GeomFlatViolin", Geom,
           setup_data = function(data, params) {
             data$width <- data$width %||%
@@ -44,8 +44,7 @@ GeomFlatViolin <-
               mutate(ymin = min(y),
                      ymax = max(y),
                      xmin = x,
-                     xmax = x - width / 2) %>% 
-              mutate(xmax = ifelse((group %% 2) == 0, x + width / 2, xmax) )
+                     xmax = x - width / 2) 
           },
   
   draw_group = function(data, panel_scales, coord) {

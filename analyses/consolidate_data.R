@@ -27,6 +27,8 @@ dna_kr_data = consolidate_krause_etal_dna_data(
   decoded_barcodes_ff = dna_kr_ff_bc,
   tailfindr_estimates_ff = dna_kr_ff_tf,
   transcript_start_info_ff = dna_kr_ff_tr,
+  moves_in_tail_ff = dna_kr_ff_mt,
   tailfindr_estimates_st = dna_kr_st_tf,
-  transcript_start_info_st = dna_kr_st_tr
+  transcript_start_info_st = dna_kr_st_tr,
+  moves_in_tail_st = dna_kr_st_mt
 )

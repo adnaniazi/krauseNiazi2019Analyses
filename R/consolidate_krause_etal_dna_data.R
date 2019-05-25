@@ -3,8 +3,10 @@
 #' @param decoded_barcodes_ff 
 #' @param tailfindr_estimates_ff 
 #' @param transcript_start_info_ff 
+#' @param moves_in_tail_ff 
 #' @param tailfindr_estimates_st 
 #' @param transcript_start_info_st 
+#' @param moves_in_tail_st
 #' @importFrom magrittr %>% 
 #' @importFrom magrittr %<>% 
 #' @return
@@ -14,9 +16,10 @@
 consolidate_krause_etal_dna_data <- function(decoded_barcodes_ff,
                                              tailfindr_estimates_ff,
                                              transcript_start_info_ff,
+                                             moves_in_tail_ff,
                                              tailfindr_estimates_st,
-                                             transcript_start_info_st) {
-  
+                                             transcript_start_info_st,
+                                             moves_in_tail_st) {
   decoded_barcodes_ff %<>% 
     # keep only valid reads in which GFP sequence is there
     dplyr::filter(read_type == 'polyA' | read_type == 'polyT') %>% 
@@ -77,7 +80,9 @@ consolidate_krause_etal_dna_data <- function(decoded_barcodes_ff,
   df <- dplyr::left_join(tailfindr_estimates_ff, tailfindr_estimates_st, by = "read_id") %>% 
     dplyr::left_join(decoded_barcodes_ff, by = "read_id") %>% 
     dplyr::left_join(transcript_start_info_st, by = "read_id") %>% 
-    dplyr::left_join(transcript_start_info_ff, by = "read_id") 
+    dplyr::left_join(transcript_start_info_ff, by = "read_id") %>% 
+    dplyr::left_join(moves_in_tail_st, by = "read_id") %>% 
+    dplyr::left_join(moves_in_tail_ff, by = "read_id") 
   
   # remove rows with missing tail length predictions
   df <- df[!is.na(df$tail_length_ff), ]

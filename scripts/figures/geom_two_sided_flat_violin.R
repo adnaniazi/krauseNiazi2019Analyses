@@ -16,7 +16,7 @@ geom_two_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "yden
     data = data,
     mapping = mapping,
     stat = stat,
-    geom = GeomFlatViolin,
+    geom = GeomFlatViolinTwoSided,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
@@ -32,7 +32,7 @@ geom_two_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "yden
 #' @format NULL
 #' @usage NULL
 #' @export
-GeomFlatViolin <-
+GeomFlatViolinTwoSided <-
   ggproto("GeomFlatViolin", Geom,
           setup_data = function(data, params) {
             data$width <- data$width %||%

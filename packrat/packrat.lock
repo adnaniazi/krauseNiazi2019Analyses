@@ -396,6 +396,13 @@ Source: CRAN
 Version: 1.6
 Hash: 5f969e213e966135393e3e304abf3f49
 
+Package: kableExtra
+Source: CRAN
+Version: 1.1.0
+Hash: 653aaaf9b80417823e9c8a5c39fe7134
+Requires: digest, glue, htmltools, knitr, magrittr, readr, rmarkdown,
+    rstudioapi, rvest, scales, stringr, viridisLite, webshot, xml2
+
 Package: knitr
 Source: CRAN
 Version: 1.22
@@ -474,6 +481,12 @@ Source: CRAN
 Version: 0.5.1
 Hash: 141afc3ef401971c1785aaca810fd12d
 Requires: remotes
+
+Package: pander
+Source: CRAN
+Version: 0.6.3
+Hash: 98b86dfaa1df41c44943d17eb4661c27
+Requires: Rcpp, digest
 
 Package: piggyback
 Source: CRAN
@@ -752,6 +765,12 @@ Source: CRAN
 Version: 2.0.6
 Hash: 44f6955bd8b36c149949f233fb5b7226
 Requires: htmltools, htmlwidgets, jsonlite, magrittr
+
+Package: webshot
+Source: CRAN
+Version: 0.5.1
+Hash: c95b36acba37ea1d6cd6e1c6fe2c2ecc
+Requires: callr, jsonlite, magrittr
 
 Package: whisker
 Source: CRAN

@@ -1,0 +1,118 @@
+---
+title: "Workman et al. RNA Data Analysis"
+author: "Adnan M. Niazi & Maximillian Krause"
+date: "5/20/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+This document contains all the analyses done on RNA data that was generated for Workman et al paper. Knit this R markdown file after you have successfully run `drake::r_make()`.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+Load the required libraries first:
+```{r load_libraries}
+pacman::p_load(pander, drake, knitr, ggpubr, here, tidyverse)
+```
+
+```{r echo=FALSE, warning=FALSE}
+# source scripts for plotting
+source(here('scripts', 'figures', 'geom_two_sided_flat_violin.R'))
+source(here('scripts', 'figures', 'geom_one_sided_flat_violin.R'))
+panderOptions('table.alignment.default', 'left')
+panderOptions('table.alignment.rownames', 'left')
+```
+
+Now load the data:
+```{r load-libraries}
+loadd(rna_wo_data)
+```
+
+Here is a description of columns of `dna_kr_data`:
+```{r data-description-1, echo=FALSE}
+col_names_df <- data.frame(Columns = c("dataset", "read_id", "tail_start_tf", "tail_end_tf", "samples_per_nt_tf", "tail_length_tf",         "tail_start_np", "tail_end_np" , "read_rate_np", "tail_length_np", "qc_tag_np", "samples_per_nt_np", "barcode"), Description = c("Specifies the name of the conditions in Workman et al. data (N.B.: 60x and 60xb were combined into a single condition called 60x)", "Read ID", "tailfindr estimate of tail start", "tailfindr estimate of tail end", "tailfindr estimation of read_specific transloation rate in units of samples per nucleotide", "tailfindr tail length estimate", "Nanopolish tail start estimate", "Nanopolish tail end estimate (originally it is transcript_start in Nanopolish output)", "Nanopolish read rate", "Nanopolish estimation of tail length", "Nanopolish QC Tag", "Nanopolish estimation of read-specific translocation rate in units of samples per nucleotide calculated using the formula: 3012/read_rate", "The expected tail length"))                                                                                                                                
+```
+
+```{r data-description-2}
+pander(col_names_df)
+```
+
+```{r, echo=FALSE}
+# re-arrange the factors in the data for proper display
+rna_wo_data$dataset <- fct_relevel(rna_wo_data$dataset, "100x", after = 6)
+rna_wo_data$barcode <- fct_relevel(rna_wo_data$barcode, "100", after = 6)
+```
+
+### Data summary
+```{r, warning=FALSE}
+# define the function for computing standard error 
+std_err <- function(x) sd(x, na.rm = TRUE)/sqrt(length(x))
+
+# summarize the data and display a table
+summary_data <- rna_wo_data %>% 
+  group_by(dataset) %>% 
+  summarise(read_count = n(),
+            mean_tf = mean(tail_length_tf, na.rm = TRUE),
+            mean_np = mean(tail_length_np, na.rm = TRUE),
+
+            median_tf = median(tail_length_tf, na.rm = TRUE),
+            median_np = median(tail_length_np, na.rm = TRUE),
+
+            std_dev_tf = sd(tail_length_tf, na.rm = TRUE),
+            std_dev_np = sd(tail_length_np, na.rm = TRUE),
+
+            std_err_tf = std_err(tail_length_tf),
+            std_err_np = std_err(tail_length_np)
+            ) 
+summary_data %<>% mutate(cof_var_tf = std_dev_tf/mean_tf,
+                         cof_var_np = std_dev_np/mean_np)
+pander(summary_data)
+```
+
+
+### Comparing Nanopolish vs. tailfindr tail length estimates
+
+```{r, warning=FALSE}
+# make long data
+long_data_tf_np_tail_length <- rna_wo_data %>% 
+  select(dataset, barcode, tail_length_tf, tail_length_np) %>% 
+  gather(key = 'tool', value = 'tail_length', tail_length_tf, tail_length_np) %>% 
+  mutate(tail_length = ifelse(tail_length >= 300, 300, tail_length)) %>% 
+  mutate(tool = fct_relevel(tool, c('tail_length_tf', 'tail_length_np'))) %>% 
+  mutate(dataset = fct_relevel(dataset, c('10x', '15x', 
+                                          '30x', '60x', 
+                                          '60xN', '80x', '100x')))
+
+
+p <- ggplot(long_data_tf_np_tail_length, aes(x = dataset, y = tail_length, 
+                                             color = tool, fill = tool)) +
+  geom_two_sided_flat_violin(position = position_nudge(x = 0, y = 0), alpha = .5) +
+  facet_grid(~dataset, scales = 'free') +
+  geom_hline(aes(yintercept = as.numeric(as.character(barcode)))) 
+p
+```
+
+```{r, warning=FALSE, echo=FALSE}
+lengend_name <- 'Tool'
+legend_labels <- c('tailfindr', 
+                   'Nanopolish')
+p <- p + theme(panel.background = element_blank(),
+        panel.grid.minor = ggplot2::element_line(colour="grey90", size=0.5),
+        panel.grid.major = ggplot2::element_line(colour="grey90", size=0.5),
+        panel.grid.major.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        legend.direction = "horizontal",
+        legend.position = "top") +
+  scale_color_brewer(palette = "Paired", name = lengend_name, labels = legend_labels) +
+  scale_fill_brewer(palette = "Paired", name = lengend_name, labels = legend_labels) +
+  ggplot2::scale_y_continuous(minor_breaks = seq(0, 300, 25)) +
+  ylab('Tail length (nt)') +
+  labs(fill = 'Tool')
+p
+```

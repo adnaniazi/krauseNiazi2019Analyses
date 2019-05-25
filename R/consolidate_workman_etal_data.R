@@ -61,7 +61,8 @@ consolidate_workman_etal_data <- function(tailfindr_estimates,
   df$barcode[df$barcode == '60xN'] <- 60
   df$barcode[df$barcode == '80x'] <- 80
   df$barcode[df$barcode == '100x'] <- 100
-  df %<>% dplyr::mutate(barcode = as.factor(barcode)) 
+  df %<>% dplyr::mutate(barcode = as.factor(barcode)) %>% 
+    dplyr::select(-transcript_alignment_start)
   
   return(df)
 }
