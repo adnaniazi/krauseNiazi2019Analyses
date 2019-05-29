@@ -563,7 +563,7 @@ dev.off()
 In our DNA algorithms, we have set a threshold of 0.3 for poly(T) reads; potential poly(T) tail should have a mean value below this threshold in the normalized signal. Similarly, we have set a threshold of 0.6 for Poly(A) reads; potential poly(A) tail should have a mean value below this threshold in the normalized signal. The analysis below shows that our thresholds are conservative and are above the maximum expected poly(A)/(T) levels.
 
 ```{r, warning=FALSE}
-model_180mv <- here('extdata', 'r9.4_180mv_450bps_6mer_template_median68pA.model')
+model_180mv <- here('data', 'r9.4_180mv_450bps_6mer_template_median68pA.model')
 df_180mv <- read.csv(model_180mv, header = TRUE, 
                      stringsAsFactors = FALSE, sep = '\t') 
 

@@ -28,7 +28,6 @@ pacman::p_load(pander, drake, knitr, ggpubr, here, tidyverse)
 ```
 
 
-
 ```{r echo=FALSE, warning=FALSE, include=FALSE}
 # functions for plotting double single and double-sided violins
 "%||%" <- function(a, b) {

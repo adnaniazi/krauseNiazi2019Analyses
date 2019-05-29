@@ -7,7 +7,7 @@
 #' @export
 #'
 get_data <- function(release_version, file_name) {
-  dest_dir <- file.path(here::here(), 'extdata')
+  dest_dir <- file.path(here::here(), 'data')
   piggyback::pb_download(
     file = file_name,
     repo = 'adnaniazi/krauseNiazi2019Datasets',

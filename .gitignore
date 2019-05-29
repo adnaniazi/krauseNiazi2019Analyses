@@ -1,5 +1,4 @@
 .drake/*
-/extdata/*.csv
 *.pyc
 *.Rcheck/
 *.orig
@@ -10,7 +9,8 @@ inst/doc/*.html
 *.log
 .Rproj.user
 *.Rproj
-inst/extdata/*.csv
+inst/data/*.csv
+data/*.csv
 Meta
 doc
 docs

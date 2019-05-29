@@ -675,7 +675,7 @@ ggsave(plot = p,
 We defined a threshold of 0.3 as the lower limit of the poly(A) level in the z-normalized squiggle data. This is a very conservative threshold as the expected poly(A) level in the normalized signal is around 0.55.
 
 ```{r, warning=FALSE}
-model_180mv <- here('extdata', 'r9.4_180mv_70bps_5mer_RNA_template_median69pA.model')
+model_180mv <- here('data', 'r9.4_180mv_70bps_5mer_RNA_template_median69pA.model')
 df_180mv <- read.csv(model_180mv, header = TRUE, 
                      stringsAsFactors = FALSE, sep = '\t') 
 
