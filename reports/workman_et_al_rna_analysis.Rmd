@@ -1,10 +1,18 @@
 ---
 title: "Workman et al. RNA Data Analysis"
 author: "Adnan M. Niazi & Maximillian Krause"
-date: "5/20/2019"
+date: "5/13/2019"
 output:
-  html_document: default
-  pdf_document: default
+  html_document: 
+    toc: yes
+    toc_depth: 3
+    number_sections: true
+    toc_float: 
+      collapsed: false
+    code_folding: hide
+    theme: cosmo
+  pdf_document: 
+    number_sections: true
 ---
 
 This document contains all the analyses done on RNA data that was generated for Workman et al paper. Knit this R markdown file after you have successfully run `drake::r_make()`.
@@ -19,10 +27,101 @@ Load the required libraries first:
 pacman::p_load(pander, drake, knitr, ggpubr, here, tidyverse)
 ```
 
-```{r echo=FALSE, warning=FALSE}
-# source scripts for plotting
-source(here('scripts', 'figures', 'geom_two_sided_flat_violin.R'))
-source(here('scripts', 'figures', 'geom_one_sided_flat_violin.R'))
+
+
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+# functions for plotting double single and double-sided violins
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+geom_one_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                                       position = "dodge", trim = TRUE, scale = "area",
+                                       show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(data = data, mapping = mapping, stat = stat,geom = GeomFlatViolinOneSided,
+        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+        params = list(trim = trim, scale = scale, ...))
+}
+
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomFlatViolinOneSided <-
+  ggproto("GeomFlatViolin", Geom,
+          setup_data = function(data, params) {
+            data$width <- data$width %||%
+              params$width %||% (resolution(data$x, FALSE) * 0.9)
+            # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+            data %>%
+              group_by(group) %>%
+              mutate(ymin = min(y),
+                     ymax = max(y),
+                     xmin = x,
+                     xmax = x - width / 2) 
+          },
+  draw_group = function(data, panel_scales, coord) {
+    # Find the points for the line to go all the way around
+    data <- transform(data, xminv = x,
+                      xmaxv = x + violinwidth * (xmax - x))
+    # Make sure it's sorted properly to draw the outline
+    newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+                     plyr::arrange(transform(data, x = xmaxv), -y))
+    # Close the polygon: set first and last point the same
+    # Needed for coord_polar and such
+    newdata <- rbind(newdata, newdata[1,])
+    ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+  },
+  draw_key = draw_key_polygon,
+  default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
+                    alpha = NA, linetype = "solid"),
+  
+  required_aes = c("x", "y")
+  )
+
+geom_two_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                                          position = "dodge", trim = TRUE, scale = "area",
+                                          show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(data = data, mapping = mapping, stat = stat, geom = GeomFlatViolinTwoSided,
+        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+        params = list(trim = trim, scale = scale, ...))
+}
+
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomFlatViolinTwoSided <-
+  ggproto("GeomFlatViolin", Geom,
+          setup_data = function(data, params) {
+            data$width <- data$width %||%
+              params$width %||% (resolution(data$x, FALSE) * 0.9)
+            # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+            data %>%
+              group_by(group) %>%
+              mutate(ymin = min(y),
+                     ymax = max(y),
+                     xmin = x,
+                     xmax = x - width / 2) %>% 
+              mutate(xmax = ifelse((group %% 2) == 0, x + width / 2, xmax) )
+          },
+  draw_group = function(data, panel_scales, coord) {
+    # Find the points for the line to go all the way around
+    data <- transform(data, xminv = x,
+                      xmaxv = x + violinwidth * (xmax - x))
+    # Make sure it's sorted properly to draw the outline
+    newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+                     plyr::arrange(transform(data, x = xmaxv), -y))
+    # Close the polygon: set first and last point the same
+    # Needed for coord_polar and such
+    newdata <- rbind(newdata, newdata[1,])
+    ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+  },
+  draw_key = draw_key_polygon,
+  default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
+                    alpha = NA, linetype = "solid"),
+  required_aes = c("x", "y")
+  )
+
 panderOptions('table.alignment.default', 'left')
 panderOptions('table.alignment.rownames', 'left')
 ```
@@ -93,7 +192,7 @@ p <- ggplot(long_data_tf_np_tail_length, aes(x = dataset, y = tail_length,
   geom_two_sided_flat_violin(position = position_nudge(x = 0, y = 0), alpha = .5) +
   facet_grid(~dataset, scales = 'free') +
   geom_hline(aes(yintercept = as.numeric(as.character(barcode)))) 
-p
+
 ```
 
 ```{r, warning=FALSE, echo=FALSE}

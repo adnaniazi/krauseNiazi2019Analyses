@@ -40,3 +40,6 @@ Now start R in this directory and run:
 packrat::restore() # restores all R packages with their specific version
 drake::r_make()    # recreates the analysis
 ```
+You can also run the above two commands in RStudio by first opening krauseNiazi2019Analyses folder as project and executing the two commands in R console.
+
+The first command restores all the packages that we have used for the analyses. The second command builds all the analyses. It first downloads all the data in CSV from into the `extdata` directory, then it consolidates information from different CSV into a single data frame. This consolidated data frame is then used in the Rmarkdown files to generate the plots.

@@ -150,6 +150,7 @@ render_drake_graph	render_drake_graph
 render_graph	render_graph
 render_sankey_drake_graph	render_sankey_drake_graph
 render_static_drake_graph	render_static_drake_graph
+render_text_drake_graph	render_text_drake_graph
 rescue_cache	rescue_cache
 rs_addin_loadd	rs_addin_loadd
 running	running
@@ -163,6 +164,7 @@ r_predict_runtime	r_make
 r_predict_workers	r_make
 r_recipe_wildcard	r_recipe_wildcard
 r_sankey_drake_graph	r_make
+r_text_drake_graph	r_make
 r_vis_drake_graph	r_make
 sankey_drake_graph	sankey_drake_graph
 session	session
@@ -173,6 +175,7 @@ static_drake_graph	static_drake_graph
 summaries	summaries
 target	target
 target_namespaces	target_namespaces
+text_drake_graph	text_drake_graph
 this_cache	this_cache
 tracked	tracked
 trigger	trigger

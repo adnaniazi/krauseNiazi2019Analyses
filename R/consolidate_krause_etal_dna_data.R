@@ -96,5 +96,8 @@ consolidate_krause_etal_dna_data <- function(decoded_barcodes_ff,
     dplyr::mutate(barcode = as.factor(barcode)) %>% 
     dplyr::mutate(replicate = as.factor(replicate)) 
   
+  # add a kit column
+  df %<>% mutate(kit = ifelse(replicate == 1, 'SQK-LSK108', 'SQK-LSK109')) 
+  
   return(df)
 }

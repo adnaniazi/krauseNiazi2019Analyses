@@ -24,14 +24,105 @@ knitr::opts_chunk$set(echo = TRUE)
 Load the required libraries first:
 ```{r load_libraries}
 pacman::p_load(dplyr, magrittr, ggplot2, drake, 
-               knitr, ggpubr, here, tidyverse, ggExtra)
+               knitr, ggpubr, here, tidyverse)
 ```
 
-```{r echo=FALSE, warning=FALSE}
-# source scripts for plotting
-source(here('scripts', 'figures', 'geom_two_sided_flat_violin.R'))
-source(here('scripts', 'figures', 'geom_one_sided_flat_violin.R'))
+
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+# functions for plotting double single and double-sided violins
+"%||%" <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+geom_one_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                                       position = "dodge", trim = TRUE, scale = "area",
+                                       show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(data = data, mapping = mapping, stat = stat,geom = GeomFlatViolinOneSided,
+        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+        params = list(trim = trim, scale = scale, ...))
+}
+
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomFlatViolinOneSided <-
+  ggproto("GeomFlatViolin", Geom,
+          setup_data = function(data, params) {
+            data$width <- data$width %||%
+              params$width %||% (resolution(data$x, FALSE) * 0.9)
+            # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+            data %>%
+              group_by(group) %>%
+              mutate(ymin = min(y),
+                     ymax = max(y),
+                     xmin = x,
+                     xmax = x - width / 2) 
+          },
+  draw_group = function(data, panel_scales, coord) {
+    # Find the points for the line to go all the way around
+    data <- transform(data, xminv = x,
+                      xmaxv = x + violinwidth * (xmax - x))
+    # Make sure it's sorted properly to draw the outline
+    newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+                     plyr::arrange(transform(data, x = xmaxv), -y))
+    # Close the polygon: set first and last point the same
+    # Needed for coord_polar and such
+    newdata <- rbind(newdata, newdata[1,])
+    ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+  },
+  draw_key = draw_key_polygon,
+  default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
+                    alpha = NA, linetype = "solid"),
+  
+  required_aes = c("x", "y")
+  )
+
+geom_two_sided_flat_violin <- function(mapping = NULL, data = NULL, stat = "ydensity",
+                                          position = "dodge", trim = TRUE, scale = "area",
+                                          show.legend = NA, inherit.aes = TRUE, ...) {
+  layer(data = data, mapping = mapping, stat = stat, geom = GeomFlatViolinTwoSided,
+        position = position, show.legend = show.legend, inherit.aes = inherit.aes,
+        params = list(trim = trim, scale = scale, ...))
+}
+
+#' @rdname ggplot2-ggproto
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomFlatViolinTwoSided <-
+  ggproto("GeomFlatViolin", Geom,
+          setup_data = function(data, params) {
+            data$width <- data$width %||%
+              params$width %||% (resolution(data$x, FALSE) * 0.9)
+            # ymin, ymax, xmin, and xmax define the bounding rectangle for each group
+            data %>%
+              group_by(group) %>%
+              mutate(ymin = min(y),
+                     ymax = max(y),
+                     xmin = x,
+                     xmax = x - width / 2) %>% 
+              mutate(xmax = ifelse((group %% 2) == 0, x + width / 2, xmax) )
+          },
+  draw_group = function(data, panel_scales, coord) {
+    # Find the points for the line to go all the way around
+    data <- transform(data, xminv = x,
+                      xmaxv = x + violinwidth * (xmax - x))
+    # Make sure it's sorted properly to draw the outline
+    newdata <- rbind(plyr::arrange(transform(data, x = xminv), y),
+                     plyr::arrange(transform(data, x = xmaxv), -y))
+    # Close the polygon: set first and last point the same
+    # Needed for coord_polar and such
+    newdata <- rbind(newdata, newdata[1,])
+    ggplot2:::ggname("geom_flat_violin", GeomPolygon$draw_panel(newdata, panel_scales, coord))
+  },
+  draw_key = draw_key_polygon,
+  default_aes = aes(weight = 1, colour = "grey20", fill = "white", size = 0.5,
+                    alpha = NA, linetype = "solid"),
+  required_aes = c("x", "y")
+  )
+
 ```
+
 
 Now load the data:
 ```{r}
@@ -46,7 +137,7 @@ dna_kr_data_capped <- dna_kr_data %>%
 # About the data
 Here is a description of columns of `dna_kr_data`:
 ```{r data-description-1, echo=FALSE}
-col_names_df <- data.frame(Columns = c("read_id", "tail_start_ff", "tail_end_ff", "samples_per_nt_ff", "tail_length_ff", "tail_start_st", "tail_end_st", "samples_per_nt_st", "tail_length_st", "read_type", "barcode", "replicate", "file_path", "transcript_alignment_start_st", "transcript_alignment_start_ff", "moves_in_tail_st", "moves_in_tail_ff"), Description = c("Read ID", "tailfindr estimate of poly(A) start site based on flipflop basecalling", "tailfindr estimate of poly(A) end site based on flipflop basecalling", "tailfindr estimate of read-specific translocation rate in units of samples per nucleotide based on flipflop basecalling", "tailfindr estimate of poly(A) tail length based on flipflop basecalling", "tailfindr estimate of poly(A) start site from standard model basecalling", "tailfindr estimate of poly(A) end site from standard model basecalling", "tailfindr estimate of read-specific translocation rate in units of samples per nucleotide from dstandard model basecalling", "tailfindr estimate of poly(A) tail length from standard model basecalling", "Whether the read is poly(A) or poly(T) read", "Expected poly(A)/(T) tail length from spikeins", "Replicate No", "Full file path (relevant only for use within Valen lab)", "Location of tail end by eGFP sequence alignment (standard model basecalling)", "Location of tail end by eGFP sequence alignment (flipflop model basecalling)", "Moves between the tail boundaries in data basecalled using standard model", "Moves between the tail boundaries in data basecalled using flipflop model"))                                                                                                                                
+col_names_df <- data.frame(Columns = c("read_id", "tail_start_ff", "tail_end_ff", "samples_per_nt_ff", "tail_length_ff", "tail_start_st", "tail_end_st", "samples_per_nt_st", "tail_length_st", "read_type", "barcode", "replicate", "file_path", "transcript_alignment_start_st", "transcript_alignment_start_ff", "moves_in_tail_st", "moves_in_tail_ff", "kit"), Description = c("Read ID", "tailfindr estimate of poly(A) start site based on flipflop basecalling", "tailfindr estimate of poly(A) end site based on flipflop basecalling", "tailfindr estimate of read-specific translocation rate in units of samples per nucleotide based on flipflop basecalling", "tailfindr estimate of poly(A) tail length based on flipflop basecalling", "tailfindr estimate of poly(A) start site from standard model basecalling", "tailfindr estimate of poly(A) end site from standard model basecalling", "tailfindr estimate of read-specific translocation rate in units of samples per nucleotide from standard model basecalling", "tailfindr estimate of poly(A) tail length from standard model basecalling", "Whether the read is poly(A) or poly(T) read", "Expected poly(A)/(T) tail length from spikeins", "Replicate No", "Full file path (relevant only for use within Valen lab)", "Location of tail end by eGFP sequence alignment (standard model basecalling)", "Location of tail end by eGFP sequence alignment (flipflop model basecalling)", "Moves between the tail boundaries in data basecalled using standard model", "Moves between the tail boundaries in data basecalled using flipflop model", "Sequencing kit used"))                                                                                                                                
 ```
 
 
@@ -82,9 +173,9 @@ p <- ggplot(dna_kr_data_capped, aes(x = barcode, y = tail_length_st,
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-lengend_name <- 'Replicate'
-legend_labels <- c('Replicate 1', 
-                   'Replicate 2')
+lengend_name <- 'Kit/Replicate'
+legend_labels <- c('SQK-LSK108 Replicate 1', 
+                   'SQK-LSK109 Replicate 2')
 p <- p + theme(panel.background = element_blank(),
         panel.grid.minor = ggplot2::element_line(colour = "grey", size = 0.5),
         panel.grid.major = ggplot2::element_line(colour = "grey", size = 0.5),
@@ -101,8 +192,15 @@ p <- p + theme(panel.background = element_blank(),
   ylab('tailfindr tail length (nt)') +
   labs(caption = 'tailfindr tail length estimate is robust across technical replicates.
        The black horizontal lines represent the expected tail length.',
-       fill = 'Replicate')
+       fill = 'Kit/Replicate')
 p
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
+RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_rep1_vs_rep2_density_plot.svg'), 
+                   width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+print(p)
+dev.off()
 ```
 
 
@@ -122,7 +220,7 @@ p <- ggplot(dna_kr_data_capped, aes(x = barcode, y = tail_length_st,
 lengend_name <- 'Read type'
 legend_labels <- c('Poly(A) reads', 
                    'Poly(T) reads')
-p <- p + theme(panel.background = element_rect(fill = "#F8F8F8"),
+p <- p + theme(panel.background = element_blank(),
         panel.grid.minor = ggplot2::element_line(colour = "grey", size = 0.3),
         panel.grid.major = ggplot2::element_line(colour = "grey", size = 0.4),
         panel.grid.major.x = element_blank(),
@@ -142,7 +240,7 @@ p <- p + theme(panel.background = element_rect(fill = "#F8F8F8"),
 p
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
 RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_polyA_vs_polyT_density_plot.svg'), 
                    width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
 print(p)
@@ -188,6 +286,71 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 
+## tail length flipflop vs standard basecalling (Poly(A) reads)
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggplot(data = filter(dna_kr_data, read_type == 'polyA'), 
+            aes(x = tail_length_st, y = tail_length_ff)) +
+  geom_point(alpha = 0.02) +
+  geom_abline(intercept = 0, slope = 1, color="red", 
+                linetype = 'dotted', size = 0.7) +
+  geom_smooth(method = 'lm',formula = y~x, color="#797979", 
+                fullrange = TRUE, se = FALSE, size = 0.5) +
+  stat_cor(method = "pearson", label.x = 10, label.y = 250) 
+```
+
+```{r, warning=FALSE, echo=FALSE}
+p <- p + theme(panel.background = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.spacing = unit(1.5, "lines"),
+        legend.direction = "horizontal",
+        axis.line = element_line(color = "black", size = 0.4),
+        rect = element_rect(fill = "transparent"),
+        legend.position = "top") +
+  coord_cartesian(xlim = c(0, 250), ylim = c(0, 250)) +
+  xlab('Tail length with standard basecalling (nt)') +
+  ylab('Tail length with flipflop basecalling (nt)')
+p
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polya_reads_scatter_plot.png'),
+       bg = "transparent", width = 5, height = 3, units = 'in')
+```
+
+## tail length flipflop vs standard basecalling (Poly(T) reads)
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggplot(data = filter(dna_kr_data, read_type == 'polyT'), 
+            aes(x = tail_length_st, y = tail_length_ff)) +
+  geom_point(alpha = 0.02) +
+  geom_abline(intercept = 0, slope = 1, color="red", 
+                linetype = 'dotted', size = 0.7) +
+  geom_smooth(method = 'lm',formula = y~x, color="#797979", 
+                fullrange = TRUE, se = FALSE, size = 0.5) +
+  stat_cor(method = "pearson", label.x = 10, label.y = 250) 
+```
+
+```{r, warning=FALSE, echo=FALSE}
+p <- p + theme(panel.background = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.spacing = unit(1.5, "lines"),
+        legend.direction = "horizontal",
+        axis.line = element_line(color = "black", size = 0.4),
+        rect = element_rect(fill = "transparent"),
+        legend.position = "top") +
+  coord_cartesian(xlim = c(0, 250), ylim = c(0, 250)) +
+  xlab('Tail length with standard basecalling (nt)') +
+  ylab('Tail length with flipflop basecalling (nt)')
+p
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polyt_reads_scatter_plot.png'),
+       bg = "transparent", width = 5, height = 3, units = 'in')
+```
 
 # tailfindr tail end estimate vs. tail end obtained by alignment of eGFP
 First a new column `transcript_end_tf`is produced in our dataset. This column holds the tailfindr boundary location which is adjacent to transcript:
@@ -218,16 +381,25 @@ p <- p + theme_bw() +
     panel.border = element_blank(),
     panel.background = element_blank()
   ) +
-  xlab('Tail end location estimated by tailfindr') +
-  ylab('Tail end by alignment with eGFP')
+  #coord_cartesian(xlim = c(0, 5000), ylim = c(0, 5000)) +
+  xlab('tailfindr tail end') +
+  ylab('Tail end estimated by alignment with eGFP') 
 p
 ```
+
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_scatter_plot.png'),
+       bg = "transparent", width = 4.7, height = 7.5, units = 'in')
+```
+
 
 To better visulize the difference, the same information is plotted as histogram:
 ```{r, warning=FALSE, echo=TRUE}
 hist_data <- mutate(dna_kr_data, diff = transcript_end_tf - transcript_alignment_start_ff) 
 p <- ggplot(hist_data, aes(x = diff)) +
-  geom_histogram(binwidth = 1) + 
+  geom_histogram(binwidth = 1, fill = "grey50", size = 0, alpha = 0.6) +
   facet_grid(read_type~.) 
 ```
 
@@ -239,6 +411,12 @@ p <- p +
   xlab('tail end location estimated by tailfindr - tail end by eGFP alignment') +
   ylab('Read count')
 p
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_histogram.png'),
+       bg = "transparent", width = 4.7, height = 7.5, units = 'in')
 ```
 
 # Analysis of spurious peak around 12 in the density plots
@@ -281,7 +459,7 @@ p <- p + theme(
 p
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
 RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_translocation_rate_density_plot.svg'), 
                    width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
 print(p)
@@ -318,7 +496,7 @@ p <- p + theme(
 p
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
 ggsave(plot = p,  
        filename = here('figures', 'dna_kr_erroneous_vs_non_erroneous_scatter_plot.png'), 
        bg = "transparent", width = 10, height = 4, units = 'in')
@@ -373,7 +551,7 @@ p <- p + theme(
 p
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
 RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_tf_egfp_end_diff_density_plot.svg'), 
                    width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
 print(p)
@@ -382,6 +560,8 @@ dev.off()
 
 
 # Justification for DNA thresholds
+In our DNA algorithms, we have set a threshold of 0.3 for poly(T) reads; potential poly(T) tail should have a mean value below this threshold in the normalized signal. Similarly, we have set a threshold of 0.6 for Poly(A) reads; potential poly(A) tail should have a mean value below this threshold in the normalized signal. The analysis below shows that our thresholds are conservative and are above the maximum expected poly(A)/(T) levels.
+
 ```{r, warning=FALSE}
 model_180mv <- here('extdata', 'r9.4_180mv_450bps_6mer_template_median68pA.model')
 df_180mv <- read.csv(model_180mv, header = TRUE, 
@@ -406,20 +586,107 @@ sd_TTTTTT <- sd(unlist(df_180mv$sampled_numbers[4096]))
 mean_all_kmers <- mean(sampled_numbers) 
 sd_all_kmers <- sd(sampled_numbers)
 
-minimum_expected_nomrmalized_AAAAAA_level  <- 
+maximum_expected_nomrmalized_AAAAAA_level  <- 
   ((mean_AAAAAA - 2 * sd_AAAAAA) - mean_all_kmers) / sd_all_kmers
 
-minimum_expected_nomrmalized_TTTTTT_level  <- 
+maximum_expected_nomrmalized_TTTTTT_level  <- 
   ((mean_TTTTTT - 2 * sd_TTTTTT) - mean_all_kmers) / sd_all_kmers
 
-cat(paste0("Minimum expected nomrmalized AAAAAA level: ", 
-           abs(minimum_expected_nomrmalized_AAAAAA_level), '\n'))
+cat(paste0("Maximum expected nomrmalized AAAAAA level: ", 
+           abs(maximum_expected_nomrmalized_AAAAAA_level), '\n'))
 
-cat(paste0("Minimum expected nomrmalized TTTTTT level: ", 
-           abs(minimum_expected_nomrmalized_TTTTTT_level), '\n'))
+cat(paste0("Maximum expected nomrmalized TTTTTT level: ", 
+           abs(maximum_expected_nomrmalized_TTTTTT_level), '\n'))
 
 ```
 
+# tailfindr tail length vs. moves in the tail region by the standard model basecaller
+
+```{r, warning=FALSE, echo=TRUE}
+# get a subset of data (30 and 100 nt tails)
+dna_kr_data_bc_30_100 <- dna_kr_data %>% 
+  filter(barcode == 30 | barcode == 100)
+```
+
+```{r, warning=FALSE, message=FALSE}
+cols <- c('#8c8c8c', '#e8b00b')
+p <- ggplot(dna_kr_data_bc_30_100,
+            aes(x = tail_length_st, y = moves_in_tail_st, colour = barcode)) +
+  # geom_hline(yintercept = c(30, 100), color = cols, 
+  #            linetype = 'dashed', size = 0.4) +
+  # geom_vline(xintercept = c(30, 100), color = cols, 
+  #            linetype = 'dashed', size = 0.4) +
+  geom_point(alpha = 0.07, size = 0) +
+  theme(panel.background = element_blank(),
+        axis.line = element_line(color = "black", size = 0.4),
+        legend.direction = "horizontal",
+        legend.position = "bottom",
+        rect = element_rect(fill = "transparent")) +
+  xlim(0, 160) + ylim(0, 110) +
+  scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
+                     labels = c('0', '30', '50', '100', '150'),
+                     limits = c(0, 160)) +
+  scale_y_continuous(breaks = c(0, 30, 50, 100), 
+                     labels = c('0', '30', '50', '100'),
+                     limits = c(0, 110)) +
+  scale_color_manual(values = cols) +
+  xlab('tailfindr tail-length prediction (nt)') +
+  ylab('Total number of moves in the tail') 
+
+p <- ggExtra::ggMarginal(p, groupColour = TRUE, groupFill = TRUE) 
+```
+
+```{r, warning=FALSE, echo=FALSE}
+grid::grid.newpage()
+grid::grid.draw(p)
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_st_tail_length_vs_moves_in_tail.png'),
+       bg = "transparent", width = 4, height = 4, units = 'in')
+```
+
+# tailfindr tail length vs. moves in the tail region by the flipflop model basecaller
+
+```{r, warning=FALSE, message=FALSE}
+cols <- c('#8c8c8c', '#e8b00b')
+p <- ggplot(dna_kr_data_bc_30_100,
+            aes(x = tail_length_ff, y = moves_in_tail_ff, colour = barcode)) +
+  # geom_hline(yintercept = c(30, 100), color = cols, 
+  #            linetype = 'dashed', size = 0.4) +
+  # geom_vline(xintercept = c(30, 100), color = cols, 
+  #            linetype = 'dashed', size = 0.4) +
+  geom_point(alpha = 0.07, size = 0) +
+  theme(panel.background = element_blank(),
+        axis.line = element_line(color = "black", size = 0.4),
+        legend.direction = "horizontal",
+        legend.position = "bottom",
+        rect = element_rect(fill = "transparent")) +
+  xlim(0, 160) + ylim(0, 110) +
+  scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
+                     labels = c('0', '30', '50', '100', '150'),
+                     limits = c(0, 160)) +
+  scale_y_continuous(breaks = c(0, 30, 50, 100), 
+                     labels = c('0', '30', '50', '100'),
+                     limits = c(0, 110)) +
+  scale_color_manual(values = cols) +
+  xlab('tailfindr tail-length prediction (nt)') +
+  ylab('Total number of moves in the tail') 
+
+p <- ggExtra::ggMarginal(p, groupColour = TRUE, groupFill = TRUE) 
+```
+
+```{r, warning=FALSE, echo=FALSE}
+grid::grid.newpage()
+grid::grid.draw(p)
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE}
+ggsave(plot = p,  
+       filename = here('figures', 'dna_kr_ff_tail_length_vs_moves_in_tail.png'),
+       bg = "transparent", width = 4, height = 4, units = 'in')
+```
 
 # RNA vs. DNA tail length comparison 
 We first load RNA data
@@ -471,7 +738,7 @@ df %<>% dplyr::mutate(
 
 Now plotting the data:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 p <- ggplot(data = df, aes(x = barcode, y = tail_length, 
                            color = data_type, fill = data_type)) +
   geom_two_sided_flat_violin(position = position_nudge(x = .2, y = 0), alpha = .5) +
@@ -502,88 +769,32 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
 RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_dna_vs_rna_density_plot.svg'), 
                    width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
 print(p)
 dev.off()
 ```
 
+# RNA vs. DNA table
 
-# tailfindr tail length vs. moves in the tail region by the standard model basecaller
+```{r, warning=FALSE}
+rna_kr_data_tmp <- rna_kr_data %>% 
+  mutate(read_type = 'polyA',
+         data = 'RNA')
 
-```{r, warning=FALSE, echo=TRUE}
-# get a subset of data (30 and 100 nt tails)
-dna_kr_data_bc_30_100 <- dna_kr_data %>% 
-  filter(barcode == 30 | barcode == 100)
-```
+rna_summary <- rna_kr_data_tmp %>% 
+  group_by(replicate, barcode, read_type, kit) %>% 
+  summarize(read_count_rna = n())
 
-```{r, warning=FALSE, message=FALSE}
-cols <- c('#8c8c8c', '#e8b00b')
-p <- ggplot(dna_kr_data_bc_30_100,
-            aes(x = tail_length_st, y = moves_in_tail_st, colour = barcode)) +
-  geom_hline(yintercept = c(30, 100), color = cols, 
-             linetype = 'dashed', size = 0.4) +
-  geom_vline(xintercept = c(30, 100), color = cols, 
-             linetype = 'dashed', size = 0.4) +
-  geom_point(alpha = 0.09) +
-  theme(panel.background = element_blank(),
-        axis.line = element_line(color = "black", size = 0.4),
-        legend.direction = "horizontal",
-        legend.position = "bottom",
-        rect = element_rect(fill = "transparent")) +
-  xlim(0, 160) + ylim(0, 110) +
-  scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
-                     labels = c('0', '30', '50', '100', '150'),
-                     limits = c(0, 160)) +
-  scale_y_continuous(breaks = c(0, 30, 50, 100), 
-                     labels = c('0', '30', '50', '100'),
-                     limits = c(0, 110)) +
-  scale_color_manual(values = cols) +
-  xlab('tailfindr tail-length prediction (nt)') +
-  ylab('Total number of moves in the tail') 
+dna_summary <- dna_kr_data %>% 
+  group_by(replicate, barcode, read_type, kit) %>% 
+  summarize(read_count_dna = n())
 
-p <- ggMarginal(p, groupColour = TRUE, groupFill = TRUE) 
-```
+combined_summary <- 
+  full_join(dna_summary, rna_summary, by = c('replicate', 'barcode', 'read_type')) %>% 
+  rename(dna_kit = kit.x, rna_kit = kit.y)
 
-```{r, warning=FALSE, echo=FALSE}
-grid::grid.newpage()
-grid::grid.draw(p)
-```
-
-
-# tailfindr tail length vs. moves in the tail region by the flipflop model basecaller
-
-```{r, warning=FALSE, message=FALSE}
-cols <- c('#8c8c8c', '#e8b00b')
-p <- ggplot(dna_kr_data_bc_30_100,
-            aes(x = tail_length_ff, y = moves_in_tail_ff, colour = barcode)) +
-  geom_hline(yintercept = c(30, 100), color = cols, 
-             linetype = 'dashed', size = 0.4) +
-  geom_vline(xintercept = c(30, 100), color = cols, 
-             linetype = 'dashed', size = 0.4) +
-  geom_point(alpha = 0.09) +
-  theme(panel.background = element_blank(),
-        axis.line = element_line(color = "black", size = 0.4),
-        legend.direction = "horizontal",
-        legend.position = "bottom",
-        rect = element_rect(fill = "transparent")) +
-  xlim(0, 160) + ylim(0, 110) +
-  scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
-                     labels = c('0', '30', '50', '100', '150'),
-                     limits = c(0, 160)) +
-  scale_y_continuous(breaks = c(0, 30, 50, 100), 
-                     labels = c('0', '30', '50', '100'),
-                     limits = c(0, 110)) +
-  scale_color_manual(values = cols) +
-  xlab('tailfindr tail-length prediction (nt)') +
-  ylab('Total number of moves in the tail') 
-
-p <- ggMarginal(p, groupColour = TRUE, groupFill = TRUE) 
-```
-
-```{r, warning=FALSE, echo=FALSE}
-grid::grid.newpage()
-grid::grid.draw(p)
+kable(combined_summary)
 ```
 
