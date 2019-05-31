@@ -2,18 +2,24 @@
 % Please edit documentation in R/consolidate_workman_etal_data.R
 \name{consolidate_workman_etal_data}
 \alias{consolidate_workman_etal_data}
-\title{Title}
+\title{Consolidate disparate pieces of information from Workman et al. data
+into a single data frame}
 \usage{
 consolidate_workman_etal_data(tailfindr_estimates, nanopolish_estimates,
   transcript_start_info)
 }
 \arguments{
-\item{tailfindr_estimates}{}
+\item{tailfindr_estimates}{A dataframe of tailfindr estimtates}
 
-\item{nanopolish_estimates}{}
+\item{nanopolish_estimates}{A dataframe of Nanopolish esimtates}
 
-\item{transcript_start_info}{}
+\item{transcript_start_info}{A dataframe of transcript start
+information as obtained by alignment of Enloase}
+}
+\value{
+A dataframe
 }
 \description{
-Title
+Consolidate disparate pieces of information from Workman et al. data
+into a single data frame
 }

@@ -2,20 +2,26 @@
 % Please edit documentation in R/consolidate_krause_etal_rna001_data.R
 \name{consolidate_krause_etal_rna001_data}
 \alias{consolidate_krause_etal_rna001_data}
-\title{Title}
+\title{Consolidate SQK-RNA001 related disparate pieces of information into a
+single data frame}
 \usage{
 consolidate_krause_etal_rna001_data(decoded_barcodes, tailfindr_estimates,
   nanopolish_estimates, transcript_start_info)
 }
 \arguments{
-\item{decoded_barcodes}{}
+\item{decoded_barcodes}{A dataframe of decode barcodes}
 
-\item{tailfindr_estimates}{}
+\item{tailfindr_estimates}{A dataframe of tailfindr estimtates}
 
-\item{nanopolish_estimates}{}
+\item{nanopolish_estimates}{A dataframe of Nanopolish esimtates}
 
-\item{transcript_start_info}{}
+\item{transcript_start_info}{A dataframe of transcript start
+information as obtained by alignment of eGFP}
+}
+\value{
+A consolidated dataframe
 }
 \description{
-Title
+Consolidate SQK-RNA001 related disparate pieces of information into a
+single data frame
 }

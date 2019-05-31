@@ -2,8 +2,10 @@
 #' a dataframe.
 #'
 #' @param release_version Which version of the data to download
-#' @param file_name 
-#'
+#' @param file_name Name of the CSV file to download
+#' 
+#' @return A dataframe
+#' 
 #' @export
 #'
 get_data <- function(release_version, file_name) {

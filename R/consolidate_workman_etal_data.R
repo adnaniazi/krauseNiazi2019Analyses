@@ -1,15 +1,16 @@
-#' Title
+#' Consolidate disparate pieces of information from Workman et al. data
+#' into a single data frame
 #'
-#' @param tailfindr_estimates 
-#' @param nanopolish_estimates 
-#' @param transcript_start_info 
-#'
+#' @param tailfindr_estimates A dataframe of tailfindr estimtates
+#' @param nanopolish_estimates A dataframe of Nanopolish esimtates
+#' @param transcript_start_info A dataframe of transcript start 
+#' information as obtained by alignment of Enloase
+
 #' @importFrom magrittr %>% 
 #'
-#' @return
-#' @export
+#' @return A dataframe
+#' @export 
 #'
-#' @examples
 consolidate_workman_etal_data <- function(tailfindr_estimates,
                                           nanopolish_estimates,
                                           transcript_start_info) {

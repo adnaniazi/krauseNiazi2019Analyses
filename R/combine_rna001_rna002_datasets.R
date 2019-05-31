@@ -1,12 +1,11 @@
-#' Title
+#' Combines SQK-RNA001 and SQK-RNA002 datasets
 #'
-#' @param rna001_dataset 
-#' @param rna002_dataset 
+#' @param rna001_dataset SQK-RNA001 dataset
+#' @param rna002_dataset SQK-RNA002 dataset
 #'
-#' @return
+#' @return A dataframe
 #' @export
 #'
-#' @examples
 combine_rna001_rna002_datasets <- function(rna001_dataset,
                                            rna002_dataset) {
   rna001_dataset %<>% 

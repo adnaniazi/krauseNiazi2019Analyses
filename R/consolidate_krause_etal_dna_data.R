@@ -1,18 +1,26 @@
-#' Title
+#' Combines all the disparate pieces of information about the DNA dataset into 
+#' a single dataframe
 #'
-#' @param decoded_barcodes_ff 
-#' @param tailfindr_estimates_ff 
-#' @param transcript_start_info_ff 
-#' @param moves_in_tail_ff 
-#' @param tailfindr_estimates_st 
-#' @param transcript_start_info_st 
-#' @param moves_in_tail_st
+#' @param decoded_barcodes_ff A dataframe of decoded barcodes from flipflop 
+#' basecalled data
+#' @param tailfindr_estimates_ff A dataframe of tailfindr estimates from 
+#' flipflop basecalled data
+#' @param transcript_start_info_ff A dataframe of transcript start information 
+#' obtained from flipflop basecalled data
+#' @param moves_in_tail_ff A dataframe of moves in the tail region obtained from
+#' using flipflop basecalled data
+#' @param tailfindr_estimates_st A dataframe of tailfindr estimates from 
+#' data basecalled using the standard model
+#' @param transcript_start_info_st A dataframe of transcript start information 
+#' obtained from data basecalled with standard model
+#' @param moves_in_tail_st A dataframe of moves in the tail region obtained from
+#' data basecalled with standard model
+#' 
 #' @importFrom magrittr %>% 
 #' @importFrom magrittr %<>% 
-#' @return
+#' @return A dataframe
 #' @export
 #'
-#' @examples
 consolidate_krause_etal_dna_data <- function(decoded_barcodes_ff,
                                              tailfindr_estimates_ff,
                                              transcript_start_info_ff,

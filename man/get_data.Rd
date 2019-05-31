@@ -10,7 +10,10 @@ get_data(release_version, file_name)
 \arguments{
 \item{release_version}{Which version of the data to download}
 
-\item{file_name}{}
+\item{file_name}{Name of the CSV file to download}
+}
+\value{
+A dataframe
 }
 \description{
 Download data from GitHub release using piggyback and return it as

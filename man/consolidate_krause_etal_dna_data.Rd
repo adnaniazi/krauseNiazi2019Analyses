@@ -2,23 +2,39 @@
 % Please edit documentation in R/consolidate_krause_etal_dna_data.R
 \name{consolidate_krause_etal_dna_data}
 \alias{consolidate_krause_etal_dna_data}
-\title{Title}
+\title{Combines all the disparate pieces of information about the DNA dataset into
+a single dataframe}
 \usage{
 consolidate_krause_etal_dna_data(decoded_barcodes_ff,
-  tailfindr_estimates_ff, transcript_start_info_ff, tailfindr_estimates_st,
-  transcript_start_info_st)
+  tailfindr_estimates_ff, transcript_start_info_ff, moves_in_tail_ff,
+  tailfindr_estimates_st, transcript_start_info_st, moves_in_tail_st)
 }
 \arguments{
-\item{decoded_barcodes_ff}{}
+\item{decoded_barcodes_ff}{A dataframe of decoded barcodes from flipflop
+basecalled data}
 
-\item{tailfindr_estimates_ff}{}
+\item{tailfindr_estimates_ff}{A dataframe of tailfindr estimates from
+flipflop basecalled data}
 
-\item{transcript_start_info_ff}{}
+\item{transcript_start_info_ff}{A dataframe of transcript start information
+obtained from flipflop basecalled data}
 
-\item{tailfindr_estimates_st}{}
+\item{moves_in_tail_ff}{A dataframe of moves in the tail region obtained from
+using flipflop basecalled data}
 
-\item{transcript_start_info_st}{}
+\item{tailfindr_estimates_st}{A dataframe of tailfindr estimates from
+data basecalled using the standard model}
+
+\item{transcript_start_info_st}{A dataframe of transcript start information
+obtained from data basecalled with standard model}
+
+\item{moves_in_tail_st}{A dataframe of moves in the tail region obtained from
+data basecalled with standard model}
+}
+\value{
+A dataframe
 }
 \description{
-Title
+Combines all the disparate pieces of information about the DNA dataset into
+a single dataframe
 }

@@ -1,16 +1,17 @@
-#' Title
+#' Consolidate SQK-RNA002 related disparate pieces of information into a 
+#' single data frame
 #'
-#' @param decoded_barcodes 
-#' @param tailfindr_estimates 
-#' @param nanopolish_estimates 
-#' @param transcript_start_info 
+#' @param decoded_barcodes A dataframe of decode barcodes
+#' @param tailfindr_estimates A dataframe of tailfindr estimtates
+#' @param nanopolish_estimates A dataframe of Nanopolish esimtates
+#' @param transcript_start_info A dataframe of transcript start 
+#' information as obtained by alignment of eGFP
 #'
 #' @importFrom magrittr %>% 
 #'
-#' @return
+#' @return A consolidated dataframe
 #' @export
 #'
-#' @examples
 consolidate_krause_etal_rna002_data <- function(decoded_barcodes,
                                                 tailfindr_estimates,
                                                 nanopolish_estimates,

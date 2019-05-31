@@ -2,15 +2,18 @@
 % Please edit documentation in R/combine_rna001_rna002_datasets.R
 \name{combine_rna001_rna002_datasets}
 \alias{combine_rna001_rna002_datasets}
-\title{Title}
+\title{Combines SQK-RNA001 and SQK-RNA002 datasets}
 \usage{
 combine_rna001_rna002_datasets(rna001_dataset, rna002_dataset)
 }
 \arguments{
-\item{rna001_dataset}{}
+\item{rna001_dataset}{SQK-RNA001 dataset}
 
-\item{rna002_dataset}{}
+\item{rna002_dataset}{SQK-RNA002 dataset}
+}
+\value{
+A dataframe
 }
 \description{
-Title
+Combines SQK-RNA001 and SQK-RNA002 datasets
 }
