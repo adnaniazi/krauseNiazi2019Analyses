@@ -79,21 +79,24 @@ This command will do a series of steps:
     information about each file and their respective columns.
 
 2.  Once all csv files are downloaded, they are consolidated into
-    dataframes. The code used that does it is located in the `R`
-    directory. This step results in three dataframes: `rna_kr_data`,
-    `dna_kr_data`, `rna_wo_data` corresponding to RNA data of
-    Krause/Niazi et al, DNA data of Krause/Niazi et al, and RNA data of
-    Workman et al. respectively. You view these datasets manually by
-    using drake’s `loadd` command.
+    dataframes. The code that does this is located in the `R` directory.
+    This step results in three dataframes: `rna_kr_data`, `dna_kr_data`,
+    `rna_wo_data` corresponding to RNA data of Krause/Niazi et al, DNA
+    data of Krause/Niazi et al, and RNA data of Workman et
+    al. respectively. You can access these datasets manually – if you
+    wish so – by using drake’s `loadd` command.
 
-3.  Using `rna_kr_data`, `dna_kr_data`, `rna_wo_data` datasets, three
-    Rmarkdown files (`krause_niazi_et_al_rna_analysis.Rmd`,
+3.  Using `rna_kr_data`, `dna_kr_data`, `rna_wo_data` datasets, three R
+    Markdown files (`krause_niazi_et_al_rna_analysis.Rmd`,
     `krause_niazi_et_al_dna_analysis.Rmd`,
     `workman_et_al_rna_analysis.Rmd`) located in the `reports` directory
-    are knit. These Rmakrdown files contain the code for all the figures
-    used in the manuscript. The html outputs of these Rmarkdown files
-    are generated in the `reports` directory. Go to `report` directory
-    and open these html files to view the figure. If you want to extend
-    the analysis, then open the Rmarkdown file, edit it, and re-knit it
-    in RStudio. The knitting should work – provided steps 1 and 2 have
-    been executed without any errors.
+    are knit. These R Makrdown files contain the code for all the
+    figures used in the manuscript. The html outputs of these R Markdown
+    files are generated in the `reports` directory. Go to `report`
+    directory and open these html files to view the rendered report.
+
+If you want to extend the analysis, then open the R Markdown file, edit
+it, and re-knit it in RStudio. The knitting should work – provided steps
+1 and 2 have been executed without any errors. Alternatively, you can
+also run `drake::r_make()`, and it will automatically run anything that
+has changed downstream of whatever you changed.
