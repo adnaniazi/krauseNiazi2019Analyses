@@ -3,6 +3,8 @@ output: github_document
 ---
 # About the data
 
+When `drake::r_make()` is run, the following CSV files will be downloaded to the `data` folder. Given below is a description of these CSV files their columns.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
