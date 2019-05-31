@@ -79,7 +79,7 @@ This command will do a series of steps:
     information about each file and their respective columns.
 
 2.  Once all csv files are downloaded, they are consolidated into
-    dataframes. The code used for this purpose is located in the `R`
+    dataframes. The code used that does it is located in the `R`
     directory. This step results in three dataframes: `rna_kr_data`,
     `dna_kr_data`, `rna_wo_data` corresponding to RNA data of
     Krause/Niazi et al, DNA data of Krause/Niazi et al, and RNA data of
