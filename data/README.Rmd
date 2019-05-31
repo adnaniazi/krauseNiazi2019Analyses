@@ -1,0 +1,136 @@
+---
+output: github_document
+---
+# About the data
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Datasets
+
+## 1. Krause/Niazi et al. DNA data
+
+The datasets below contains data from two replicates: first replicate is obtained using SQK_LSK108, while the second one is obtained using SQK-LSK109.
+
+##### 1. dna-krause-lsk108_109-standard_basecalling-tailfindr_estimates-two_replicates-with_filepaths.csv
+tailfindr estimations using data that has been basecalled with standard model.
+
+##### 2. dna-krause-lsk108_109-flipflop_basecalling-tailfindr_estimates-two_replicates-with_filepaths.csv
+tailfindr estimations using data that has been basecalled with flipflop model.
+
+##### 3. dna-krause-lsk108_109-flipflop_basecalling-decoded_barcodes-two_replicates-with_filepaths.csv
+Barcode assignment output using data that has been basecalled with flipflop model.
+
+##### 4. dna-krause-lsk108_109-standard_basecalling-transcript_alignment_start-two_replicates-with_filepaths.csv
+Transcript alignment start information using data that has been basecalled with standard model.
+
+##### 5. dna-krause-lsk108_109-flipflop_basecalling-transcript_alignment_start-two_replicates-with_filepaths.csv
+Transcript alignment start information using data that has been basecalled with flipflop model.
+
+##### 6. dna-krause-lsk108_109-standard_basecalling-moves_in_tail-two_replicates-with_filepaths.csv
+Total moves within the poly(A)/(T) tail boundaries in the data that has been basecalled with standard model.
+
+##### 7. dna-krause-lsk108_109-flipflop_basecalling-moves_in_tail-two_replicates-with_filepaths.csv
+Total moves within the poly(A)/(T) tail boundaries in the data that has been basecalled with flipflop model.
+
+## 2. Krause/Niazi et al. RNA data
+For RNA data, we obtained two replicates using SQK-RNA001 sequencing kit, and a third replicate (after receiving the reviews) using SQK-RNA002 kit. Replicates using SQK-RNA001 had the reverse transcription step, whereas the SQK-RNA002 replicate was obtained by omitting this step.
+
+##### rna-krause-rna001-standard_basecalling-tailfindr_estimates-two_replicates-with_filepaths.csv
+tailfindr estimations using data that has been basecalled with standard model. The data contains both of the SQK-RNA001 replicates.
+
+##### rna-krause-rna001-standard_basecalling-nanopolish_estimates-two_replicates-with_filepaths.csv
+Nanopolish estimations using data that has been basecalled with standard model. The data contains both of the SQK-RNA001 replicates.
+
+##### rna-krause-rna001-standard_basecalling-decoded_barcodes-two_replicates-with_filepaths.csv
+Barcode assignment output using data that has been basecalled with standard model. The data contains both of the SQK-RNA001 replicates.
+
+##### rna-krause-rna001-standard_basecalling-transcript_alignment_start-two_replicates-with_filepaths.csv
+Transcript alignment start information using data that has been basecalled with standard model. The data contains both of the SQK-RNA001 replicates.
+
+##### rna-krause-rna002-standard_basecalling-tailfindr_estimates-with_filepaths.csv
+tailfindr estimations using data that has been basecalled with standard model. The data contains a single replicate from SQK-RNA002.
+
+##### rna-krause-rna002-standard_basecalling-nanopolish_estimates-with_filepaths.csv
+Nanopolish estimations using data that has been basecalled with standard model. The data contains a single replicate from SQK-RNA002.
+
+##### rna-krause-rna002-standard_basecalling-decoded_barcodes-with_filepaths.csv
+Barcode assignment output using data that has been basecalled with standard model. The data contains a single replicate from SQK-RNA002.
+
+##### rna-krause-rna002-standard_basecalling-transcript_alignment_start-with_filepaths.csv
+Transcript alignment start information using data that has been basecalled with standard model. The data contains a single replicate from SQK-RNA002.
+
+## 3. Workman et al. DNA data
+
+##### rna-workman-rna001-standard_basecalling-tailfindr_estimates-all_datasets-with_filepaths.csv
+tailfindr estimations for Workman et al. data re-basecalled with standard model. 
+
+##### rna-workman-rna001-standard_basecalling-nanopolish_estimates-all_datasets-with_filepaths.csv
+Nanopolish estimations for Workman et al. data re-basecalled with standard model. 
+
+## 4. ONT mer model files
+##### r9.4_180mv_450bps_6mer_template_median68pA.model
+DNA model. This is used for calculation of thresholds used in our DNA tail-finding algorithm.
+
+##### r9.4_180mv_70bps_5mer_RNA_template_median69pA.model
+RNA model. This is used for calculation of thresholds used in our RNA tail-finding algorithm.
+
+# Column descriptions
+#### tailfindr CSV files
+1. read_id: Read ID
+2. read_type: Whether the read is poly(A)/poly(T) or invalid. Only reported for DNA datasets.
+3. tail_is_valid: Whether a poly(A)-tailed read is a full-length read or not. This is important because a poly(A) tail is at the end of the read, and premature termination of reads is prevelant in cDNA. Only reported for DNA datasets.
+4. tail_start: Sample index of start site of the tail in raw data
+5. tail_end: Sample index of end site of the tail in raw data
+6. samples_per_nt: Read rate in terms of samples per nucleotide
+7. tail_length: Tail length in nucleotides. It is the difference between tail_end and tail_start divided by samples_per_nt
+8. file_path: Full read path. Only relevant for internal use within Valen lab.
+9. replicate: Replicate number
+
+#### Barcode assignment/decoding CSV files
+1. read_id: Read ID
+2. file_path: Full read path. Only relevant for internal use within Valen lab.
+3. read_type: In case of DNA whether a read is GFP-containing Poly(A) or poly(T) read, or an invalid read. Incase of RNA, whether a read is GFP-containing Poly(A) read, or an invalid read.
+4. read_length: Length of the read in terms of bases reported in that read             
+5. read_too_long: Is the read greater that 900 nt
+6. read_too_short: Is the read shorter that 900 nt
+7. nas_gfp: Normalized alignment score for GFP alignment
+8. nas_rc_gfp: Normalized alignment score for reverse complement of GFP alignment             
+9. nas_fp: Normalized alignment score for front primer alignment  
+10. nas_rc_fp: Normalized alignment score for alignment of reverse complement of front primer
+11. nas_10bp: Normalized alignment score for alignment of barcode 10
+12. nas_30bp: Normalized alignment score for alignment of barcode 30               
+13. nas_40bp: Normalized alignment score for alignment of barcode 40
+14. nas_60bp: Normalized alignment score for alignment of barcode 60
+15. nas_100bp: Normalized alignment score for alignment of barcode 100
+16. nas_150bp: Normalized alignment score for alignment of barcode 150
+17. nas_slip: Normalized alignment score for alignment of slip barcode. Ignore it. For internal use only.
+18. barcode: Barcode with the highest normalized alignment score
+19. barcode_tie: Is there any other barcode with same highest alignment score.
+20. barcode_2: Which barcode is it that has the same highest alignment score as the first barcode.            
+21. barcode_passed_threshold: Does the normalized alignment score of the barcode with the highest alignment score pass the minimum threshold of 0.6. 
+22. replicate: Replicate number 
+
+#### Transcript alignment start CSV files
+1. transcript_alignment_start: Sample index of the junction point of the eGFP transcript and the poly(A)/(T) tail 
+2. read_id: Read ID
+3. file_path: Full file path. Only relevant for internal use within Valen lab.   
+
+#### Moves in the tail CSV files
+1. read_id: Read ID
+2. moves_in_tail_st: Moves in the tail between tail start and end boundaries for data that has been basecalled with standard model  
+2. moves_in_tail_ff: Moves in the tail between tail start and end boundaries for data that has been basecalled with flipflop model  
+
+#### Nanopolish estimation CSV files
+1. readname: Read ID
+2. contig
+3. position
+4. leader_start
+5. adapter_start   
+6. polya_start: Sample index of the start of the tail
+7. transcript_start: Sample index of the end of the tail
+8. read_rate
+9. polya_length
+10. qc_tag         
+11. file_path: Full read path. Only relevant for internal use within Valen lab.
