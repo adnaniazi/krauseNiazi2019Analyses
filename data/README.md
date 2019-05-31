@@ -1,6 +1,10 @@
 
 # About the data
 
+When `drake::r_make()` is run, the following CSV files will be
+downloaded to the `data` folder. Given below is a description of these
+CSV files and their columns.
+
 # Datasets
 
 ## 1\. Krause/Niazi et al. DNA data
