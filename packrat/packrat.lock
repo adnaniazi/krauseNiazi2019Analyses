@@ -225,10 +225,19 @@ Version: 0.0.2
 Hash: 4aaf002dd434e8c854611c5d11a1d58e
 
 Package: ggExtra
-Source: CRAN
+Source: github
 Version: 0.8
-Hash: 8dbc79c1a920c06bb914fd78f78ae05b
-Requires: colourpicker, ggplot2, gtable, miniUI, scales, shiny, shinyjs
+Hash: 3204610195590799b8306cfe75a9ed5a
+Requires: R6, colourpicker, ggplot2, gtable, miniUI, scales
+GithubRepo: ggExtra
+GithubUsername: adnaniazi
+GithubRef: master
+GithubSha1: 1c1f8f0d3003d6696dad9f76b0eecf2585c85d7c
+RemoteHost: api.github.com
+RemoteRepo: ggExtra
+RemoteUsername: adnaniazi
+RemoteRef: master
+RemoteSha: 1c1f8f0d3003d6696dad9f76b0eecf2585c85d7c
 
 Package: ggplot2
 Source: CRAN

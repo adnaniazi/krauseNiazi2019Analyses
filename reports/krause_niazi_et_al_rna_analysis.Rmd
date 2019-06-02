@@ -19,6 +19,7 @@ This document contains all the analyses done on RNA data that we generated for t
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+save_figures <- FALSE
 ```
 
 Load the required libraries first:
@@ -184,10 +185,12 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tf_tail_length_all_bc_all_reps_density_plot.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tf_tail_length_all_bc_all_reps_density_plot.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 ## Tail length statistics
@@ -242,10 +245,12 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_rna001_vs_rna002_density_plot.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_rna001_vs_rna002_density_plot.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 ## Tail length statistics
@@ -305,10 +310,12 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_rna001_rep1_vs_rna001_rep2_density_plot.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_rna001_rep1_vs_rna001_rep2_density_plot.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 ## Tail length summaries
@@ -369,10 +376,12 @@ p
 
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_tf_vs_np_all_barcodes_density.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_tf_vs_np_all_barcodes_density.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 ## Tail length summaries
@@ -424,10 +433,12 @@ p <- p + theme(panel.background = element_blank(),
 p
 ```
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_tf_vs_np_two_barcodes_density.svg'), 
-                   width = 4, height = 3, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tail_length_tf_vs_np_two_barcodes_density.svg'), 
+                     width = 4, height = 3, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 # tailfindr poly(A) end vs. sequence end by alignment of eGFP
@@ -460,9 +471,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_tail_end_vs_egfp_end_scatter_plot.png'),
-       bg = "transparent", width = 5, height = 5, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_tail_end_vs_egfp_end_scatter_plot.png'),
+         bg = "transparent", width = 5, height = 5, units = 'in')
+}
 ```
 
 To better visualize the precision of end definition, a histogram of the difference between tailfindr poly(A) end and the sequence alignment position is generated:
@@ -483,9 +496,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_tail_end_vs_egfp_end_scatter_histogram.png'),
-       bg = "transparent", width = 6.5, height = 5, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_tail_end_vs_egfp_end_scatter_histogram.png'),
+         bg = "transparent", width = 6.5, height = 5, units = 'in')
+}
 ```
 
 # Nanopolish tail length estimate vs. tailfindr tail length estimate
@@ -521,9 +536,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_vs_np_tail_length.png'), 
-       bg = "transparent", width = 10, height = 6, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_vs_np_tail_length.png'), 
+         bg = "transparent", width = 10, height = 6, units = 'in')
+}
 ```
 
 To better visualize the overlap in poly(A) start detection, a histogram of the difference between Nanopolish and tailfindr poly(A) start is generated:
@@ -570,9 +587,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_vs_np_tail_tail_start_scatter_plot.png'), 
-       bg = "transparent", width = 10, height = 6, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_vs_np_tail_tail_start_scatter_plot.png'), 
+         bg = "transparent", width = 10, height = 6, units = 'in')
+}
 ```
 
 To better visualize the overlap in poly(A) start detection, a histogram of the difference between Nanopolish and tailfindr poly(A) start is generated:
@@ -619,9 +638,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_vs_np_tail_end_scatter_plot.png'), 
-       bg = "transparent", width = 10, height = 6, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_vs_np_tail_end_scatter_plot.png'), 
+         bg = "transparent", width = 10, height = 6, units = 'in')
+}
 ```
 
 To better visualize the overlap in poly(A) start detection, a histogram of the difference between Nanopolish and tailfindr poly(A) start is generated:
@@ -666,9 +687,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'rna_kr_tf_vs_np_normalizer.png'), 
-       bg = "transparent", width = 10, height = 6, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'rna_kr_tf_vs_np_normalizer.png'), 
+         bg = "transparent", width = 10, height = 6, units = 'in')
+}
 ```
 
 # Justification for RNA thresholds
@@ -734,8 +757,10 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'rna_kr_tail_all_three_replicates_normalizer.svg'), 
-                   width = 10, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'rna_kr_tail_all_three_replicates_normalizer.svg'), 
+                     width = 10, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```

@@ -19,6 +19,7 @@ This document contains all the analyses done on ONT DNA data that was generated 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+save_figures <- FALSE
 ```
 
 Load the required libraries first:
@@ -197,10 +198,12 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_rep1_vs_rep2_density_plot.svg'), 
-                   width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_rep1_vs_rep2_density_plot.svg'), 
+                     width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 
@@ -241,10 +244,12 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_polyA_vs_polyT_density_plot.svg'), 
-                   width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_polyA_vs_polyT_density_plot.svg'), 
+                     width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 # tailfindr tail length comparison between flipflop and standard basecalling
@@ -314,9 +319,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polya_reads_scatter_plot.png'),
-       bg = "transparent", width = 5, height = 3, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polya_reads_scatter_plot.png'),
+         bg = "transparent", width = 5, height = 3, units = 'in')
+}
 ```
 
 ## tail length flipflop vs standard basecalling (Poly(T) reads)
@@ -347,9 +354,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polyt_reads_scatter_plot.png'),
-       bg = "transparent", width = 5, height = 3, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polyt_reads_scatter_plot.png'),
+         bg = "transparent", width = 5, height = 3, units = 'in')
+}
 ```
 
 # tailfindr tail end estimate vs. tail end obtained by alignment of eGFP
@@ -389,9 +398,11 @@ p
 
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_scatter_plot.png'),
-       bg = "transparent", width = 4.7, height = 7.5, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_scatter_plot.png'),
+         bg = "transparent", width = 4.7, height = 7.5, units = 'in')
+}
 ```
 
 
@@ -414,9 +425,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_histogram.png'),
-       bg = "transparent", width = 4.7, height = 7.5, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_tf_tail_end_vs_egfp_aligment_polyat_histogram.png'),
+         bg = "transparent", width = 4.7, height = 7.5, units = 'in')
+}
 ```
 
 # Analysis of spurious peak around 12 in the density plots
@@ -460,10 +473,12 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_translocation_rate_density_plot.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_translocation_rate_density_plot.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 
@@ -497,9 +512,11 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_erroneous_vs_non_erroneous_scatter_plot.png'), 
-       bg = "transparent", width = 10, height = 4, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_erroneous_vs_non_erroneous_scatter_plot.png'), 
+         bg = "transparent", width = 10, height = 4, units = 'in')
+}
 ```
 
 ## eGFP alignment end vs tailfindr end on erroneoush vs non-erroneous reads
@@ -552,10 +569,12 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_tf_egfp_end_diff_density_plot.svg'), 
-                   width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_erroneous_vs_non_erroneous_tf_egfp_end_diff_density_plot.svg'), 
+                     width = 5, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 
@@ -642,9 +661,11 @@ grid::grid.draw(p)
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_st_tail_length_vs_moves_in_tail.png'),
-       bg = "transparent", width = 4, height = 4, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_st_tail_length_vs_moves_in_tail.png'),
+         bg = "transparent", width = 4, height = 4, units = 'in')
+}
 ```
 
 # tailfindr tail length vs. moves in the tail region by the flipflop model basecaller
@@ -683,9 +704,11 @@ grid::grid.draw(p)
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE}
-ggsave(plot = p,  
-       filename = here('figures', 'dna_kr_ff_tail_length_vs_moves_in_tail.png'),
-       bg = "transparent", width = 4, height = 4, units = 'in')
+if (save_figures) {
+  ggsave(plot = p,  
+         filename = here('figures', 'dna_kr_ff_tail_length_vs_moves_in_tail.png'),
+         bg = "transparent", width = 4, height = 4, units = 'in')
+}
 ```
 
 # RNA vs. DNA tail length comparison 
@@ -770,10 +793,12 @@ p
 ```
 
 ```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
-RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_dna_vs_rna_density_plot.svg'), 
-                   width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
-print(p)
-dev.off()
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_tf_tail_length_dna_vs_rna_density_plot.svg'), 
+                     width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
 ```
 
 # RNA vs. DNA table

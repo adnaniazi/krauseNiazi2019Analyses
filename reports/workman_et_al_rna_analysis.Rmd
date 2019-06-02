@@ -19,7 +19,7 @@ This document contains all the analyses done on RNA data that was generated for 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+save_figures <- FALSE
 ```
 
 Load the required libraries first:
