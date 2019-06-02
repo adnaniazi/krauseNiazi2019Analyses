@@ -1,5 +1,5 @@
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--05--31-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--06--02-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.5.0-brightgreen.svg)](https://cran.r-project.org/)
 [![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
@@ -32,10 +32,18 @@ not compatible with R versions prior version 3.6.0 (In general, it
 should be possible to reproduce the analysis on any other operating
 system.)
 
+## Pre-requisites
+
+You must have:
+
+1.  A working installation of git
+
+2.  R (version 3.6.0 or above)
+
 ## Getting started
 
-To clone the project, a working installation of git is required. Open a
-terminal in the directory of your choice and execute:
+To clone the project, open a terminal in the directory of your choice
+and execute:
 
 ``` sh
 git clone https://github.com/adnaniazi/krauseNiazi2019Analyses.git

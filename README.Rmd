@@ -23,9 +23,19 @@ The R library of this project is managed by packrat. This makes sure that the ex
 
 Please note that this project was built with R version 3.6.0 on a MAC OSx Mojave operating system. The packrat packages from this project are not compatible with R versions prior version 3.6.0 (In general, it should be possible to reproduce the analysis on any other operating system.)
 
+## Pre-requisites
+
+You must have:
+
+1. A working installation of git
+
+2. R (version 3.6.0 or above)
+
+3. `packrat` package
+
 ## Getting started
 
-To clone the project, a working installation of git is required. Open a terminal in the directory of your choice and execute:
+To clone the project, open a terminal in the directory of your choice and execute:
 
 ```sh
 git clone https://github.com/adnaniazi/krauseNiazi2019Analyses.git
@@ -37,7 +47,9 @@ cd krauseNiazi2019Analyses
 Now start R in this directory and run:
 
 ```{r eval = FALSE}
-packrat::restore() # restores all R packages with their specific version
+# restore all R packages with their specific version (won't run for R < 3.6.0)
+packrat::restore() 
+
 ```
 You can also run the the above command in RStudio by first opening `krauseNiazi2019Analyses` folder as a project, and then executing it in the R console of RStudio. By using the above command, all required packages will be installed with their specific version.
 
