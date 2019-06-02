@@ -79,7 +79,7 @@ This command will do a series of steps:
 1.  It will download outputs of tailfindr, Nanopolish, barcode
     assignment, eGFP alignment results for DNA and RNA data (both us and
     Workman et al.’s) as `.csv` files in the `data` folder. This step
-    may take some time as the files are large. All the script that
+    may take some time as these files are large. All the scripts that
     generated these `csv` files are present in the `scripts` folder. You
     can use these scripts manually yourself if you want to start working
     your way up from Fast5 files. However, for the sake of ease and
