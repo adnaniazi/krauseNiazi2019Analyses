@@ -26,7 +26,7 @@ NeedsCompilation: no
 Packaged: 2018-07-17 20:24:43 UTC; beckerg4
 Repository: CRAN
 Date/Publication: 2018-07-17 21:10:03 UTC
-Built: R 3.6.0; ; 2019-05-09 11:08:18 UTC; unix
+Built: R 3.6.0; ; 2019-06-02 09:48:51 UTC; unix
 InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 3cd543f853b0a93756068173cd344d60

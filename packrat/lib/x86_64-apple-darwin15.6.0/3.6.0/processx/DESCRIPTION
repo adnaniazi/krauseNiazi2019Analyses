@@ -29,7 +29,7 @@ Author: Gábor Csárdi [aut, cre, cph]
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
 Date/Publication: 2019-05-08 05:20:02 UTC
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-05-09 11:08:11 UTC;
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-05-09 11:17:47 UTC;
     unix
 InstallAgent: packrat 0.5.0
 InstallSource: CRAN

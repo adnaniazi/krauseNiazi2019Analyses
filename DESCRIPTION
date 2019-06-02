@@ -25,7 +25,10 @@ Imports:
     visNetwork,
     here,
     Jmisc,
-    pacman
+    pacman,
+    RSvgDevice,
+    kableExtra,
+    pander
 Suggests:
     knitr,
     testthat,

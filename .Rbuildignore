@@ -11,4 +11,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^packrat/
+^data/
+^reports/
+^scripts/
+^code/
 ^\.Rprofile$
