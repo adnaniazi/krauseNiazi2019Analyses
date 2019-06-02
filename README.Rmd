@@ -25,13 +25,11 @@ Please note that this project was built with R version 3.6.0 on a MAC OSx Mojave
 
 ## Pre-requisites
 
-You must have:
+Before starting, please ensure that you have:
 
 1. A working installation of git
 
-2. R (version 3.6.0 or above)
-
-3. `packrat` package
+2. R (version *3.6.0* or above)
 
 ## Getting started
 

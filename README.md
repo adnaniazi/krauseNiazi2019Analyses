@@ -34,11 +34,11 @@ system.)
 
 ## Pre-requisites
 
-You must have:
+Before starting, please ensure that you have:
 
 1.  A working installation of git
 
-2.  R (version 3.6.0 or above)
+2.  R (version *3.6.0* or above)
 
 ## Getting started
 
@@ -55,10 +55,12 @@ Then go into the `krauseNiazi2019Analyses` directory using:
 cd krauseNiazi2019Analyses
 ```
 
-Now start R in this directory and run:
+Now start R in this directory and
+run:
 
 ``` r
-packrat::restore() # restores all R packages with their specific version
+# restore all R packages with their specific version (won't run for R < 3.6.0)
+packrat::restore() 
 ```
 
 You can also run the the above command in RStudio by first opening
