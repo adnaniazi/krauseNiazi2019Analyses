@@ -4,7 +4,7 @@
 This direcotry contains all the R Markdown files for generating figure
 used in the tailfindr manuscript.
 
-When you run `drake::r_make()`, it will first ownload the data,
+When you run `drake::r_make()`, it will first download the data,
 consolidate the data, and then knit the R Markdown files – present in
 this directory – using the consolidated data. The html output of the R
 Markdown files is stored here with the same name as the R Markdown file.
