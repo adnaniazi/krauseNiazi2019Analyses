@@ -1,22 +1,22 @@
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--06--05-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--06--06-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
 [![minimal R
-version](https://img.shields.io/badge/R%3E%3D-3.5.0-brightgreen.svg)](https://cran.r-project.org/)
+version](https://img.shields.io/badge/R%3E%3D-3.6.0-brightgreen.svg)](https://cran.r-project.org/)
 [![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
 
 ## Reproducible analysis for paper:
 
-##### tailfindr: Alignment-free poly(A) length measurement for Oxford Nanopore RNA and DNA sequencing
+#### [tailfindr: Alignment-free poly(A) length measurement for Oxford Nanopore RNA and DNA sequencing](https://www.biorxiv.org/content/10.1101/588343v2)
 
 Maximilian Krause, Adnan M. Niazi, Kornel Labun, Yamila N. Torres
 Cleuren, Florian S. Müller, Eivind Valen
 
 ## About the repo
 
-This repository is roughly organized as an R package, providing
-functions and the raw data to reproduce and extend the analyses reported
-in the publication. By raw data, we mean the output of tools such as
-tailfindr and Nanopolish etc.
+This repository is roughly organized as an R package – but is not an R
+package per se – providing functions and the raw data to reproduce and
+extend the analyses reported in the publication. By raw data, we mean
+the output of tools such as tailfindr and Nanopolish etc.
 
 This project is setup with a drake workflow, ensuring reproducibility.
 Intermediate targets/objects will be stored in a hidden .drake
@@ -55,18 +55,19 @@ Then go into the `krauseNiazi2019Analyses` directory using:
 cd krauseNiazi2019Analyses
 ```
 
-Now start R in this directory and
-run:
+Now start R in this location in the terminal:
 
-``` r
-# restore all R packages with their specific version (won't run for R < 3.6.0)
-packrat::restore() 
+``` sh
+R
 ```
 
-You can also run the the above command in RStudio by first opening
-`krauseNiazi2019Analyses` folder as a project, and then executing it in
-the R console of RStudio. By using the above command, all required
-packages will be installed with their specific version.
+Now in R console,
+type:
+
+``` r
+# restore all R packages with their specific version (won't run in R < 3.6.0)
+packrat::restore() 
+```
 
 Next execute:
 
@@ -106,12 +107,14 @@ This command will do a series of steps:
     directory and open these html files to view the rendered report.
 
 If you want to extend the analysis, then open the R Markdown file, edit
-it, and re-knit it in RStudio. The knitting should work – provided steps
-1 and 2 have been executed without any errors. Alternatively, you can
-also run `drake::r_make()`, and it will automatically run anything that
-has changed downstream of whatever you changed.
+it, and re-knit it in RStudio. You will need to open
+`krauseNiazi2019Analyses` directory as a project in R-studio. The
+knitting should work – provided steps 1 and 2 have been executed without
+any errors. Alternatively, you can also run `drake::r_make()`, and it
+will automatically run anything that has changed downstream of whatever
+you changed.
 
-## What is what
+## What is what?
 
 ##### R
 
