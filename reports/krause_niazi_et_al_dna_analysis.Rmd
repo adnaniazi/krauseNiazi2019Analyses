@@ -606,20 +606,20 @@ sd_TTTTTT <- sd(unlist(df_180mv$sampled_numbers[4096]))
 mean_all_kmers <- mean(sampled_numbers) 
 sd_all_kmers <- sd(sampled_numbers)
 
+cat(paste0("Mean expected AAAAAA level after normalisation: ",
+          abs((mean_AAAAAA - mean_all_kmers) / sd_all_kmers), '\n'))
+
+cat(paste0("Mean expected TTTTTT level after normalisation: ",
+          abs((mean_TTTTTT - mean_all_kmers) / sd_all_kmers), '\n'))
+
 maximum_expected_normalized_AAAAAA_level  <- 
   ((mean_AAAAAA - 2 * sd_AAAAAA) - mean_all_kmers) / sd_all_kmers
 
-maximum_expected_normalized_TTTTTT_level  <- 
-  ((mean_TTTTTT - 2 * sd_TTTTTT) - mean_all_kmers) / sd_all_kmers
-
-cat(paste0("Mean expected AAAAAA level before normalisation: ",
-          abs(mean_AAAAAA), '\n'))
-
-cat(paste0("Mean expected TTTTTT level before normalisation: ",
-          abs(mean_TTTTTT), '\n'))
-
 cat(paste0("Maximum expected normalized AAAAAA level: ", 
            abs(maximum_expected_normalized_AAAAAA_level), '\n'))
+
+maximum_expected_normalized_TTTTTT_level  <- 
+  ((mean_TTTTTT - 2 * sd_TTTTTT) - mean_all_kmers) / sd_all_kmers
 
 cat(paste0("Maximum expected normalized TTTTTT level: ", 
            abs(maximum_expected_normalized_TTTTTT_level), '\n'))

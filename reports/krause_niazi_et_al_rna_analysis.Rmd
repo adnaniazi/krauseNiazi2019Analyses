@@ -695,7 +695,7 @@ if (save_figures) {
 ```
 
 # Justification for RNA thresholds
-We defined a threshold of 0.3 as the lower limit of the poly(A) level in the z-normalized squiggle data. This is a very conservative threshold as the expected poly(A) level in the normalized signal is around 0.55.
+To define poly(A) segments from signal data, we defined a threshold of 0.3 as the lower limit of the poly(A) level expected after squiggle data z-normalisation. We chose this threshold, as the expected mean signal level for homopolymer A stretches in RNA is well above zero (see below). To make the threshold robust against data variation, we further chose the threshold to not be violated even when substracting two standard deviations of the expected mean signal. The results of expected signal after normalisation and with standard deviation substraction can be found below.
 
 ```{r, warning=FALSE}
 model_180mv <- here('data', 'r9.4_180mv_70bps_5mer_RNA_template_median69pA.model')
@@ -704,7 +704,7 @@ df_180mv <- read.csv(model_180mv, header = TRUE,
 
 df_180mv <- as.tibble(df_180mv)
 
-# sample 100 numbers from a Gaussian distribution for each kmer mu and sd
+# sample 1000 numbers from a Gaussian distribution for each kmer mu and sd
 set.seed(5)
 df_180mv %<>% select(kmer, level_mean, level_stdv) %>% 
   rowwise() %>% 
@@ -719,17 +719,16 @@ sd_AAAAA <- sd(unlist(df_180mv$sampled_numbers[1]))
 mean_all_kmers <- mean(sampled_numbers) 
 sd_all_kmers <- sd(sampled_numbers)
 
+paste0("Mean expected AAAAA level after normalisation: ", 
+      (mean_AAAAA - mean_all_kmers) / sd_all_kmers)
+
 minimum_expected_normalized_AAAAA_level  <- 
   ((mean_AAAAA - 2 * sd_AAAAA) - mean_all_kmers) / sd_all_kmers
-
-paste0("Mean expected AAAAA level before normalisation: ", 
-       mean_AAAAA)
 
 paste0("Minimum expected normalized AAAAA level: ", 
        minimum_expected_normalized_AAAAA_level)
 
 ```
-
 
 
 # Translocation rate across sequencing kits

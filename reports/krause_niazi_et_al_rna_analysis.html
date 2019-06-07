@@ -2455,14 +2455,14 @@ p</code></pre>
 </div>
 <div id="justification-for-rna-thresholds" class="section level1">
 <h1><span class="header-section-number">11</span> Justification for RNA thresholds</h1>
-<p>We defined a threshold of 0.3 as the lower limit of the poly(A) level in the z-normalized squiggle data. This is a very conservative threshold as the expected poly(A) level in the normalized signal is around 0.55.</p>
+<p>To define poly(A) segments from signal data, we defined a threshold of 0.3 as the lower limit of the poly(A) level expected after squiggle data z-normalisation. We chose this threshold, as the expected mean signal level for homopolymer A stretches in RNA is well above zero (see below). To make the threshold robust against data variation, we further chose the threshold to not be violated even when substracting two standard deviations of the expected mean signal. The results of expected signal after normalisation and with standard deviation substraction can be found below.</p>
 <pre class="r"><code>model_180mv &lt;- here('data', 'r9.4_180mv_70bps_5mer_RNA_template_median69pA.model')
 df_180mv &lt;- read.csv(model_180mv, header = TRUE, 
                      stringsAsFactors = FALSE, sep = '\t') 
 
 df_180mv &lt;- as.tibble(df_180mv)
 
-# sample 100 numbers from a Gaussian distribution for each kmer mu and sd
+# sample 1000 numbers from a Gaussian distribution for each kmer mu and sd
 set.seed(5)
 df_180mv %&lt;&gt;% select(kmer, level_mean, level_stdv) %&gt;% 
   rowwise() %&gt;% 
@@ -2477,13 +2477,13 @@ sd_AAAAA &lt;- sd(unlist(df_180mv$sampled_numbers[1]))
 mean_all_kmers &lt;- mean(sampled_numbers) 
 sd_all_kmers &lt;- sd(sampled_numbers)
 
-minimum_expected_normalized_AAAAA_level  &lt;- 
+paste0(&quot;Mean expected AAAAA level after normalisation: &quot;, 
+      (mean_AAAAA - mean_all_kmers) / sd_all_kmers)</code></pre>
+<pre><code>## [1] &quot;Mean expected AAAAA level after normalisation: 0.874440204218477&quot;</code></pre>
+<pre class="r"><code>minimum_expected_normalized_AAAAA_level  &lt;- 
   ((mean_AAAAA - 2 * sd_AAAAA) - mean_all_kmers) / sd_all_kmers
 
-paste0(&quot;Mean expected AAAAA level before normalisation: &quot;, 
-       mean_AAAAA)</code></pre>
-<pre><code>## [1] &quot;Mean expected AAAAA level before normalisation: 108.947983034793&quot;</code></pre>
-<pre class="r"><code>paste0(&quot;Minimum expected normalized AAAAA level: &quot;, 
+paste0(&quot;Minimum expected normalized AAAAA level: &quot;, 
        minimum_expected_normalized_AAAAA_level)</code></pre>
 <pre><code>## [1] &quot;Minimum expected normalized AAAAA level: 0.546148002736018&quot;</code></pre>
 </div>
