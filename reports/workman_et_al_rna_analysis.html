@@ -1722,8 +1722,8 @@ div.tocify {
 </tr>
 </tbody>
 </table>
-<div id="data-summary" class="section level3">
-<h3><span class="header-section-number">0.0.1</span> Data summary</h3>
+<div id="data-summary" class="section level1">
+<h1><span class="header-section-number">1</span> Data summary</h1>
 <pre class="r"><code># define the function for computing standard error 
 std_err &lt;- function(x) sd(x, na.rm = TRUE)/sqrt(length(x))
 
@@ -1904,8 +1904,8 @@ pander(summary_data)</code></pre>
 </tbody>
 </table>
 </div>
-<div id="comparing-nanopolish-vs.tailfindr-tail-length-estimates" class="section level3">
-<h3><span class="header-section-number">0.0.2</span> Comparing Nanopolish vs. tailfindr tail length estimates</h3>
+<div id="comparing-nanopolish-vs.tailfindr-tail-length-estimates" class="section level1">
+<h1><span class="header-section-number">2</span> Comparing Nanopolish vs. tailfindr tail length estimates</h1>
 <pre class="r"><code># make long data
 long_data_tf_np_tail_length &lt;- rna_wo_data %&gt;% 
   select(dataset, barcode, tail_length_tf, tail_length_np) %&gt;% 

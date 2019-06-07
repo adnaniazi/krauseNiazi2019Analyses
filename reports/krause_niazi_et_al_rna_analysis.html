@@ -2477,12 +2477,15 @@ sd_AAAAA &lt;- sd(unlist(df_180mv$sampled_numbers[1]))
 mean_all_kmers &lt;- mean(sampled_numbers) 
 sd_all_kmers &lt;- sd(sampled_numbers)
 
-minimum_expected_nomrmalized_AAAAA_level  &lt;- 
+minimum_expected_normalized_AAAAA_level  &lt;- 
   ((mean_AAAAA - 2 * sd_AAAAA) - mean_all_kmers) / sd_all_kmers
 
-paste0(&quot;Minimum expected nomrmalized AAAAA level: &quot;, 
-       minimum_expected_nomrmalized_AAAAA_level)</code></pre>
-<pre><code>## [1] &quot;Minimum expected nomrmalized AAAAA level: 0.546148002736018&quot;</code></pre>
+paste0(&quot;Mean expected AAAAA level before normalisation: &quot;, 
+       mean_AAAAA)</code></pre>
+<pre><code>## [1] &quot;Mean expected AAAAA level before normalisation: 108.947983034793&quot;</code></pre>
+<pre class="r"><code>paste0(&quot;Minimum expected normalized AAAAA level: &quot;, 
+       minimum_expected_normalized_AAAAA_level)</code></pre>
+<pre><code>## [1] &quot;Minimum expected normalized AAAAA level: 0.546148002736018&quot;</code></pre>
 </div>
 <div id="translocation-rate-across-sequencing-kits" class="section level1">
 <h1><span class="header-section-number">12</span> Translocation rate across sequencing kits</h1>

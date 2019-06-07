@@ -719,11 +719,14 @@ sd_AAAAA <- sd(unlist(df_180mv$sampled_numbers[1]))
 mean_all_kmers <- mean(sampled_numbers) 
 sd_all_kmers <- sd(sampled_numbers)
 
-minimum_expected_nomrmalized_AAAAA_level  <- 
+minimum_expected_normalized_AAAAA_level  <- 
   ((mean_AAAAA - 2 * sd_AAAAA) - mean_all_kmers) / sd_all_kmers
 
-paste0("Minimum expected nomrmalized AAAAA level: ", 
-       minimum_expected_nomrmalized_AAAAA_level)
+paste0("Mean expected AAAAA level before normalisation: ", 
+       mean_AAAAA)
+
+paste0("Minimum expected normalized AAAAA level: ", 
+       minimum_expected_normalized_AAAAA_level)
 
 ```
 

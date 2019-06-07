@@ -145,7 +145,7 @@ rna_wo_data$dataset <- fct_relevel(rna_wo_data$dataset, "100x", after = 6)
 rna_wo_data$barcode <- fct_relevel(rna_wo_data$barcode, "100", after = 6)
 ```
 
-### Data summary
+# Data summary
 ```{r, warning=FALSE}
 # define the function for computing standard error 
 std_err <- function(x) sd(x, na.rm = TRUE)/sqrt(length(x))
@@ -172,7 +172,7 @@ pander(summary_data)
 ```
 
 
-### Comparing Nanopolish vs. tailfindr tail length estimates
+# Comparing Nanopolish vs. tailfindr tail length estimates
 
 ```{r, warning=FALSE}
 # make long data

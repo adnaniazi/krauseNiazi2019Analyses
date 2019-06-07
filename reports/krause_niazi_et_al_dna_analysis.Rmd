@@ -406,7 +406,7 @@ if (save_figures) {
 ```
 
 
-To better visulize the difference, the same information is plotted as histogram:
+To better visualize the difference, the same information is plotted as histogram:
 ```{r, warning=FALSE, echo=TRUE}
 hist_data <- mutate(dna_kr_data, diff = transcript_end_tf - transcript_alignment_start_ff) 
 p <- ggplot(hist_data, aes(x = diff)) +
@@ -579,7 +579,8 @@ if (save_figures) {
 
 
 # Justification for DNA thresholds
-In our DNA algorithms, we have set a threshold of 0.3 for poly(T) reads; potential poly(T) tail should have a mean value below this threshold in the normalized signal. Similarly, we have set a threshold of 0.6 for Poly(A) reads; potential poly(A) tail should have a mean value below this threshold in the normalized signal. The analysis below shows that our thresholds are conservative and are above the maximum expected poly(A)/(T) levels.
+To define poly(A)/(T) sections in DNA sequencing, our algorithm thresholds normalised raw signal data. Threshold values are 0.3 for poly(T) reads and 0.6 for poly(A) reads. Based on provided model data used for basecalling, the expected mean for both these homopolymeric nucleotide stretches should be well below that threshold after normalisation (see below).
+Since the signal value can vary, we aimed to set a robust threshold. We thus decided to set the threshold in a way to contain all expected signal value within 2 standard deviations from the mean. As shown below, the expected signal value 2 standard deviations from the expected mean is still contained within the chosen thresholds.
 
 ```{r, warning=FALSE}
 model_180mv <- here('data', 'r9.4_180mv_450bps_6mer_template_median68pA.model')
@@ -588,7 +589,7 @@ df_180mv <- read.csv(model_180mv, header = TRUE,
 
 df_180mv <- as.tibble(df_180mv)
 
-# sample 100 numbers from a Gaussian distribution for each kmer mu and sd
+# sample 1000 numbers from a Gaussian distribution for each kmer mu and sd
 set.seed(5)
 df_180mv %<>% select(kmer, level_mean, level_stdv) %>% 
   rowwise() %>% 
@@ -605,17 +606,23 @@ sd_TTTTTT <- sd(unlist(df_180mv$sampled_numbers[4096]))
 mean_all_kmers <- mean(sampled_numbers) 
 sd_all_kmers <- sd(sampled_numbers)
 
-maximum_expected_nomrmalized_AAAAAA_level  <- 
+maximum_expected_normalized_AAAAAA_level  <- 
   ((mean_AAAAAA - 2 * sd_AAAAAA) - mean_all_kmers) / sd_all_kmers
 
-maximum_expected_nomrmalized_TTTTTT_level  <- 
+maximum_expected_normalized_TTTTTT_level  <- 
   ((mean_TTTTTT - 2 * sd_TTTTTT) - mean_all_kmers) / sd_all_kmers
 
-cat(paste0("Maximum expected nomrmalized AAAAAA level: ", 
-           abs(maximum_expected_nomrmalized_AAAAAA_level), '\n'))
+cat(paste0("Mean expected AAAAAA level before normalisation: ",
+          abs(mean_AAAAAA), '\n'))
 
-cat(paste0("Maximum expected nomrmalized TTTTTT level: ", 
-           abs(maximum_expected_nomrmalized_TTTTTT_level), '\n'))
+cat(paste0("Mean expected TTTTTT level before normalisation: ",
+          abs(mean_TTTTTT), '\n'))
+
+cat(paste0("Maximum expected normalized AAAAAA level: ", 
+           abs(maximum_expected_normalized_AAAAAA_level), '\n'))
+
+cat(paste0("Maximum expected normalized TTTTTT level: ", 
+           abs(maximum_expected_normalized_TTTTTT_level), '\n'))
 
 ```
 
