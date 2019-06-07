@@ -1,5 +1,5 @@
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--06--06-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--06--07-brightgreen.svg)](https://github.com/pat-s/pathogen-modeling/commits/master)
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.6.0-brightgreen.svg)](https://cran.r-project.org/)
 [![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
@@ -39,6 +39,9 @@ Before starting, please ensure that you have:
 1.  A working installation of git
 
 2.  R (version *3.6.0* or above)
+
+3.  A working installation of pandoc. You can install it using
+    instructions [here](https://pandoc.org/installing.html).
 
 ## Getting started
 

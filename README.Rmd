@@ -31,6 +31,8 @@ Before starting, please ensure that you have:
 
 2. R (version *3.6.0* or above)
 
+3. A working installation of pandoc. You can install it using instructions [here](https://pandoc.org/installing.html).
+
 ## Getting started
 
 To clone the project, open a terminal in the directory of your choice and execute:
