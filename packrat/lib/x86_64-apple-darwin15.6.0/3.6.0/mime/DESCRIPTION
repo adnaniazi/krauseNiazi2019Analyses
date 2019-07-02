@@ -22,9 +22,8 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
 Date/Publication: 2018-10-05 18:10:03 UTC
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:49:57 UTC;
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-06-27 07:51:09 UTC;
     unix
-Archs: mime.so.dSYM
 InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 2ed8f98b8284ad733f3907fc6e2f1334

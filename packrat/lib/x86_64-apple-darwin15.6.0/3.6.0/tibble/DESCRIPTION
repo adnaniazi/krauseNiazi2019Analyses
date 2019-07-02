@@ -35,9 +35,8 @@ Author: Kirill Müller [aut, cre], Hadley Wickham [aut], Romain Francois
 Maintainer: Kirill Müller <krlmlr+r@mailbox.org>
 Repository: CRAN
 Date/Publication: 2019-05-29 21:40:03 UTC
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-05-30 14:20:28 UTC;
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-06-27 07:52:24 UTC;
     unix
-Archs: tibble.so.dSYM
 InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 2835a4230fd49a0bc31370e95ed35938

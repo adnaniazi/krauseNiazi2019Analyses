@@ -19,7 +19,7 @@ This document contains all the analyses done on ONT DNA data that was generated 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-save_figures <- FALSE
+save_figures <- TRUE
 ```
 
 Load the required libraries first:
@@ -310,7 +310,7 @@ p <- p + theme(panel.background = element_blank(),
         panel.spacing = unit(1.5, "lines"),
         legend.direction = "horizontal",
         axis.line = element_line(color = "black", size = 0.4),
-        rect = element_rect(fill = "transparent"),
+        rect = element_rect(fill = "white"),
         legend.position = "top") +
   coord_cartesian(xlim = c(0, 250), ylim = c(0, 250)) +
   xlab('Tail length with standard basecalling (nt)') +
@@ -322,7 +322,7 @@ p
 if (save_figures) {
   ggsave(plot = p,  
          filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polya_reads_scatter_plot.png'),
-         bg = "transparent", width = 5, height = 3, units = 'in')
+         bg = "white", width = 5, height = 3, units = 'in')
 }
 ```
 
@@ -345,7 +345,7 @@ p <- p + theme(panel.background = element_blank(),
         panel.spacing = unit(1.5, "lines"),
         legend.direction = "horizontal",
         axis.line = element_line(color = "black", size = 0.4),
-        rect = element_rect(fill = "transparent"),
+        rect = element_rect(fill = "white"),
         legend.position = "top") +
   coord_cartesian(xlim = c(0, 250), ylim = c(0, 250)) +
   xlab('Tail length with standard basecalling (nt)') +
@@ -357,7 +357,7 @@ p
 if (save_figures) {
   ggsave(plot = p,  
          filename = here('figures', 'dna_kr_tail_length_st_vs_ff_polyt_reads_scatter_plot.png'),
-         bg = "transparent", width = 5, height = 3, units = 'in')
+         bg = "white", width = 5, height = 3, units = 'in')
 }
 ```
 
@@ -499,7 +499,7 @@ p <- ggplot(spurious_peak_data, aes(x = tail_length_in_samples_st,
 lengend_name <- 'Read'
 legend_labels <- c('Erroneous', 'BC 60', 'BC 100', 'BC 150')
 p <- p + theme(
-  rect = element_rect(fill = "transparent"),
+  rect = element_rect(fill = "white"),
   panel.background = element_blank(),
   axis.line = element_line(colour = 'black', size = 0.5)) +
     scale_color_brewer(palette = "BrBG",
@@ -515,7 +515,7 @@ p
 if (save_figures) {
   ggsave(plot = p,  
          filename = here('figures', 'dna_kr_erroneous_vs_non_erroneous_scatter_plot.png'), 
-         bg = "transparent", width = 10, height = 4, units = 'in')
+         bg = "white", width = 10, height = 4, units = 'in')
 }
 ```
 
@@ -647,7 +647,7 @@ p <- ggplot(dna_kr_data_bc_30_100,
         axis.line = element_line(color = "black", size = 0.4),
         legend.direction = "horizontal",
         legend.position = "bottom",
-        rect = element_rect(fill = "transparent")) +
+        rect = element_rect(fill = "white")) +
   xlim(0, 160) + ylim(0, 110) +
   scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
                      labels = c('0', '30', '50', '100', '150'),
@@ -671,7 +671,7 @@ grid::grid.draw(p)
 if (save_figures) {
   ggsave(plot = p,  
          filename = here('figures', 'dna_kr_st_tail_length_vs_moves_in_tail.png'),
-         bg = "transparent", width = 4, height = 4, units = 'in')
+         bg = "white", width = 4, height = 4, units = 'in')
 }
 ```
 
@@ -690,7 +690,7 @@ p <- ggplot(dna_kr_data_bc_30_100,
         axis.line = element_line(color = "black", size = 0.4),
         legend.direction = "horizontal",
         legend.position = "bottom",
-        rect = element_rect(fill = "transparent")) +
+        rect = element_rect(fill = "white")) +
   xlim(0, 160) + ylim(0, 110) +
   scale_x_continuous(breaks = c(0, 30, 50, 100, 150), 
                      labels = c('0', '30', '50', '100', '150'),
@@ -714,7 +714,7 @@ grid::grid.draw(p)
 if (save_figures) {
   ggsave(plot = p,  
          filename = here('figures', 'dna_kr_ff_tail_length_vs_moves_in_tail.png'),
-         bg = "transparent", width = 4, height = 4, units = 'in')
+         bg = "white", width = 4, height = 4, units = 'in')
 }
 ```
 
@@ -829,4 +829,98 @@ combined_summary <-
 
 kable(combined_summary)
 ```
+
+
+# ISMB POSTER RNA Vs. DNA Translocation rate comparison
+We first load RNA data
+```{r }
+loadd(rna_kr_data)
+```
+
+Because RNA and DNA dataset have different number of reads in each barcode, therefore, before comparing these two datasets, we make a new dataset in which there are equal number of reads in all barcode in both RNA and DNA conditions.
+
+```{r }
+polyat_dna <- select(dna_kr_data, samples_per_nt_st, barcode) %>% 
+  mutate(barcode = as.numeric(as.character(barcode)))
+
+polya_rna <-select(rna_kr_data, samples_per_nt_tf, barcode) %>% 
+  mutate(barcode = as.numeric(as.character(barcode)))
+
+# tabulate reads in each DNA barcode
+dna_barcode_nums <- as.data.frame(table(polyat_dna$barcode))
+dna_barcode_nums <- 
+  rename(dna_barcode_nums, barcode = Var1, n_desired = Freq) 
+dna_barcode_nums %<>% mutate(barcode = as.numeric(as.character(barcode)))
+
+# randomize rna data
+set.seed(5)
+polya_rna <- polya_rna[sample(nrow(polya_rna)),]
+# inlclude only complete cases
+polya_rna <- polya_rna[complete.cases(polya_rna), ]
+
+# make a subset of RNA reads with same of reads in each barcode as that in DNA
+polya_rna_subset <- left_join(polya_rna, dna_barcode_nums, by = "barcode") %>%
+  group_by(barcode) %>% 
+  slice(seq(first(n_desired))) %>%
+  select(-n_desired)
+```
+
+# combine rna and dna datasets
+```{r}
+polya_rna_subset %<>% rename(samples_per_nt = samples_per_nt_tf) %>% 
+  mutate(data_type = 'RNA')
+
+polyat_dna %<>% mutate(data_type = 'DNA') %>% 
+  rename(samples_per_nt = samples_per_nt_st)
+
+df <- bind_rows(polyat_dna, polya_rna_subset)
+df %<>% dplyr::mutate(
+  data_type = as.factor(data_type),
+  barcode = as.factor(barcode)
+)
+```
+
+Now plotting the data:
+
+```{r, warning=FALSE, message=FALSE}
+p <- ggplot(data = df, aes(x = data_type, y = samples_per_nt, 
+                           color = data_type, fill = data_type)) +
+  geom_two_sided_flat_violin(alpha = .5) 
+```
+
+```{r, warning=FALSE, echo=FALSE}
+lengend_name <- 'Data'
+legend_labels <- c('DNA', 
+                   'RNA')
+p <- p + theme(panel.background = element_blank(),
+        panel.grid.minor = ggplot2::element_line(colour = "grey", size = 0.3),
+        panel.grid.major = ggplot2::element_line(colour = "grey", size = 0.4),
+        panel.grid.major.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.spacing = unit(1.5, "lines"),
+        legend.direction = "horizontal",
+        legend.position = "top") +
+  scale_color_brewer(palette = "Paired", name = lengend_name, labels = legend_labels) +
+  scale_fill_brewer(palette = "Paired", name = lengend_name, labels = legend_labels) +
+  scale_y_continuous(minor_breaks = seq(0, 50, 10)) +
+  coord_cartesian(ylim = c(0, 50)) +
+  ylab('tailfindr tail length [nt]') +
+  labs(caption = 'DNA tail estimates have less spread comapred to RNA. 
+       The black horizontal lines represent the expected poly(A) tail length.')
+p
+```
+
+```{r, warning=FALSE, echo=FALSE, message=FALSE, results="hide"}
+if (save_figures) {
+  RSvgDevice::devSVG(here('figures', 'dna_kr_tf_samples_per_nt_dna_vs_rna_density_plot.svg'), 
+                     width = 5.7, height = 3.5, onefile = TRUE, xmlHeader = TRUE)
+  print(p)
+  dev.off()
+}
+```
+
+
+
 

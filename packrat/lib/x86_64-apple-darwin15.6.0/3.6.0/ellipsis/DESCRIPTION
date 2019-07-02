@@ -22,9 +22,8 @@ Author: Hadley Wickham [aut, cre], RStudio [cph]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
 Date/Publication: 2019-02-19 05:30:03 UTC
-Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-04-26 19:53:06 UTC;
+Built: R 3.6.0; x86_64-apple-darwin15.6.0; 2019-06-27 07:51:03 UTC;
     unix
-Archs: ellipsis.so.dSYM
 InstallAgent: packrat 0.5.0
 InstallSource: CRAN
 Hash: 0b5710f4cb576ada4c0449fbb62fd5ee
